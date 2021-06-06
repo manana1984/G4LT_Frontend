@@ -2,7 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native'
 import { ListItem, Avatar } from 'react-native-elements';
 import { useLayoutEffect } from 'react';
-import Ionicons from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connectAuth } from '../../Redux/connects';
 
 import styles from './styles';
@@ -15,7 +15,7 @@ const SettingsScreen = ({ navigation, logout }) => {
       headerTitle: "Settings",
       headerLeft: () => (
         <TouchableOpacity onPress={() => navigation.navigate('profile')} style={{ marginLeft: 10 }}>
-          <Ionicons name='left' size={24} />
+          <Ionicons name='ios-chevron-back' size={24} />
         </TouchableOpacity>
       ),
       headerRight: () => (
@@ -38,15 +38,15 @@ const SettingsScreen = ({ navigation, logout }) => {
   return (
     <View>
       <View style={styles.line}>
-        <Ionicons name="user" size={29} style={{color: '#800080'}}></Ionicons>
+        <Ionicons name="ios-person-sharp" size={31} style={{color: '#800080'}}></Ionicons>
         <Text style={styles.text} onPress={() => navigation.navigate('PersonalProfile')}>Profile</Text>
       </View>
       <View style={styles.line1}>
-        <Ionicons name="lock" size={31} style={{color: '#800080'}}></Ionicons>
+        <Ionicons name="ios-lock-closed" size={31} style={{color: '#800080'}}></Ionicons>
         <Text style={styles.text1}  onPress={() => navigation.navigate('ResetPassword')}>Password</Text>
       </View>
       <View style={styles.line1}>
-        <Ionicons name="logout" size={31} style={{color: '#800080'}}></Ionicons>
+        <Ionicons name="ios-log-out-outline" size={31} style={{color: '#800080'}}></Ionicons>
         <Text style={styles.text1}  onPress={() => logout()}>logout</Text>
       </View>
 

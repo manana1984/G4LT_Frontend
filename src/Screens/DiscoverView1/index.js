@@ -9,7 +9,7 @@ import styles from './styles';
 import FeedAPI from '../../Services/feeds';
 import { useIsFocused } from "@react-navigation/native";
 
-const DiscoverView1Screen = (props, { navigation }) => {
+const DiscoverView1Screen = (props) => {
   const { user } = props;
   const isFocused = useIsFocused();
   const [userdata, setUserData] = useState({
@@ -26,7 +26,7 @@ const DiscoverView1Screen = (props, { navigation }) => {
       headerTitleStyle: { alignSelf: 'center' },
       headerTitle: "Discover",
       headerLeft: () => (
-        <TouchableOpacity onPress={() => props.navigation.navigate('discover')} style={{ marginLeft: 10 }}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('G4LT')} style={{ marginLeft: 10 }}>
           <Ionicons name='chevron-left' size={24} color='Black' />
         </TouchableOpacity>
       ),
@@ -148,9 +148,12 @@ const DiscoverView1Screen = (props, { navigation }) => {
         <TouchableOpacity onPress={() => {
           onClickCircleBtn(props.route.params.username)
         }} style={styles.roundButton1}>
-          <Text style={styles.text_3}>{statusCircle=="Approved"?'':statusCircle }</Text>
+          <Text style={styles.text_3}>{statusCircle == "Approved" ? '' : statusCircle}</Text>
           {
-            statusCircle == "Approved" && <Ionicons color={"#800080"} size={32} name='lock'></Ionicons>
+            statusCircle == "Approved" &&
+            <View style={styles.lock}>
+              <Ionicons color={"#800080"} size={32} name='lock'></Ionicons>
+            </View>
           }
         </TouchableOpacity>
       </View>

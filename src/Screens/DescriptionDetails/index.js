@@ -50,18 +50,18 @@ const DescriptionDetailsScreen = (props) => {
         <Text style={styles.input}> {props.route.params.description}</Text>
       </View>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23 }} >
-      {
-        props.route.params.attachments.includes(',data') ? props.route.params.attachments.split(',data').map((item, index) => (
-        <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }}/>
-        )) : (
-          <Image style={styles.tinyLogo} source={{ uri: props.route.params.attachments }}/>
-        )
-      }
-      {
-        comments.map((comment, index) => (
+        {
+          props.route.params.attachments.includes(',data') ? props.route.params.attachments.split(',data').map((item, index) => (
+            <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} />
+          )) : (
+            <Image style={styles.tinyLogo} source={{ uri: props.route.params.attachments }} />
+          )
+        }
+        {
+          comments.map((comment, index) => (
           <Text style={styles.input2} key={comment}>{comments}</Text>
-        ))
-      }
+          ))
+        }
       </View>
       <View style={styles.line}  >
         <View style={styles.input1}>
@@ -69,7 +69,7 @@ const DescriptionDetailsScreen = (props) => {
             onChangeText={x => setDesText(x)} value={desText} />
         </View>
         <View style={styles.icon1}>
-          <Ionicons name='plus-circle' size={27} color='#800080' />
+          {/* <Ionicons name='plus-circle' size={27} color='#800080' /> */}
         </View>
         <View style={styles.icon2}>
           <Ionicons name='send' size={27} onPress={() => setComment(desText)} color='#800080' />

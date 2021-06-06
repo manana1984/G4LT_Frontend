@@ -9,7 +9,7 @@ import styles from './styles';
 import FeedAPI from '../../Services/feeds';
 import { useIsFocused } from "@react-navigation/native";
 
-const DiscoverViewScreen = (props, { navigation }) => {
+const DiscoverViewScreen = (props) => {
   const { user } = props;
   const isFocused = useIsFocused();
   const [userdata, setUserData] = useState({
@@ -82,7 +82,7 @@ const DiscoverViewScreen = (props, { navigation }) => {
           } else if (res.data[i].approved == false) {
             setStatusCircle("Join Circle");
           } else if (res.data[i].approved == true) {
-            setStatusCircle("Approved");            
+            setStatusCircle("Approved");
           }
           break;
         }
@@ -147,9 +147,12 @@ const DiscoverViewScreen = (props, { navigation }) => {
         <TouchableOpacity onPress={() => {
           onClickCircleBtn(props.route.params.username)
         }} style={styles.roundButton1}>
-          <Text style={styles.text_3}>{statusCircle=="Approved"?'':statusCircle }</Text>
+          <Text style={styles.text_3}>{statusCircle == "Approved" ? '' : statusCircle}</Text>
           {
-            statusCircle == "Approved" && <Ionicons size={32} name='lock' color="#800080"></Ionicons>
+            statusCircle == "Approved" &&
+            <View style={styles.lock}>
+              <Ionicons size={32} name='lock' color="#800080" />
+            </View>
           }
         </TouchableOpacity>
       </View>

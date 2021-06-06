@@ -26,7 +26,7 @@ export default StyleSheet.create({
         marginLeft: 15,
     },
     text: {
-        marginLeft:35 ,
+        marginLeft:32 ,
         fontSize: 19
     },
     text1: {

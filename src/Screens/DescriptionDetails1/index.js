@@ -7,7 +7,7 @@ import { connectAuth, connectGeneralStatesToProps, connectAuthDescription } from
 import styles from './styles';
 import FeedsAPI from '../../Services/feeds';
 
-const DescriptionDetails1Screen = (props) => {
+const DescriptionDetails1Screen = (props, { created_at }) => {
   const { user } = props;
   const [desText, setDesText] = useState("");
   const [comments, setComments] = useState([]);
@@ -37,11 +37,23 @@ const DescriptionDetails1Screen = (props) => {
     });
   });
 
-  const setComment = data1 => {
+  const setComment = data => {
     const temp = [...comments];
-    temp.push(data1);
+    temp.push(data);
     setDesText("");
-    setComments(temp, []);
+    setComments(temp);
+  }
+
+  const commentDelete = (index) => {
+    const temp = [...comments];
+    temp.splice(index, 1);
+    setComments(temp);
+  }
+
+  const commentEdit = (index) => {
+    <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
+      <Ionicons name='check' size={17} color='#800080' />
+    </TouchableOpacity>
   }
 
   return (
@@ -56,12 +68,30 @@ const DescriptionDetails1Screen = (props) => {
             props.route.params.attachments.includes(',data') ? props.route.params.attachments.split(',data').map((item, index) => (
               <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} />
             )) : (
-              <Image style={styles.tinyLogo} source={{ uri: props.route.params.attachments }} />
+              <Image style={styles.tinyLogo1} source={{ uri: props.route.params.attachments }} />
             )
           }
           {
             comments.map((comment, index) => (
-              <Text style={styles.input2} key={comment}>{comments}</Text>
+              <View>
+                <View style={styles.comment}>
+                  <TouchableOpacity style={styles.Avatar} >
+                    <Avatar size="small" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={0.1} rounded
+                      source={{ uri: user.avatar || 'https://faces/twitter/ladylexy/128.jpg', }} />
+                  </TouchableOpacity>
+                  <Text style={styles.name}> {user.firstname} {user.lastname}  </Text>
+                  <View>{created_at}</View>
+                </View>
+                <View style={styles.comment}>
+                  <Text style={styles.input2} key={comment}>{comment}</Text>
+                  <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
+                    <Ionicons name='edit' size={17} color='#800080' />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.delete} onPress={() => commentDelete(index)}>
+                    <Ionicons name='delete' size={17} color='#800080' />
+                  </TouchableOpacity>
+                </View>
+              </View>
             ))
           }
         </View>
@@ -72,7 +102,7 @@ const DescriptionDetails1Screen = (props) => {
             onChangeText={x => setDesText(x)} value={desText} />
         </View>
         <View style={styles.icon1}>
-          <Ionicons name='plus-circle' size={27} color='#800080' />
+          {/* <Ionicons name='plus-circle' size={27} color='#800080' /> */}
         </View>
         <View style={styles.icon2}>
           <Ionicons name='send' size={27} onPress={() => setComment(desText)} color='#800080' />

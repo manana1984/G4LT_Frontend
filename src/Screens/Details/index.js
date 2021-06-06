@@ -54,7 +54,7 @@ const ProfileComponent = ({ avatar, currentusername, navigation, username, first
     </View>
     <TouchableOpacity style={styles.Avatar2} >
       <View >
-        <Ionicons name='thumbs-up' color='#800080' size={17} />
+        <Ionicons name='thumbs-up-sharp' color='#800080' size={17} />
       </View>
         <Text style={styles.math}>0</Text>
       <TouchableOpacity style={styles.Avatar3} >

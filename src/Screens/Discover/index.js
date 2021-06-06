@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity, ScrollView, Text, Image, View } from 'react-native';
 import { useRef, useLayoutEffect, useState } from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/FontAwesome';
 import { ListItem, Avatar } from 'react-native-elements';
 import { connectAuth, connectGeneralStatesToProps, connectAuthDescription } from '../../Redux/connects';
 import ImageView from 'react-native-image-view';
@@ -83,12 +83,12 @@ const DiscoverScreen = (props) => {
       headerTitle: "Discover",
       headerLeft: () => (
         <TouchableOpacity onPress={() => props.navigation.navigate('first')} style={{ marginLeft: 10 }}>
-          <Ionicons name='md-chevron-back' size={24} color='Black' />
+          <Ionicons name='chevron-left' size={24} color='Black' />
         </TouchableOpacity>
       ),
       headerRight: () => (
         <TouchableOpacity onPress={() => alert('cancel')} style={{ marginRight: 10 }} >
-          <Ionicons name='search-sharp' size={24} color='Black' />
+          <Ionicons name='search' size={24} color='Black' />
         </TouchableOpacity>
       ),
       headerStyle: {

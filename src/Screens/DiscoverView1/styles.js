@@ -86,5 +86,8 @@ export default StyleSheet.create({
         fontSize: 17,
         color: "#800080"
     },
-
+    lock: {
+        paddingBottom: 13,
+        paddingLeft: 2
+    }
 });
