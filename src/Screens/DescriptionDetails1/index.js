@@ -54,7 +54,6 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
   }
 
   const commentEdit = (index) => {
-    console.log('comment', index, isEdit, comments[index]);
     if (!isEdit[index]) {
       const temp = [...isEdit];
       temp[index] = !isEdit[index];

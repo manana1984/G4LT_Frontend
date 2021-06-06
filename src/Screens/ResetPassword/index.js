@@ -70,7 +70,6 @@ const ResetPasswordScreen = (props) => {
             text2: 'Incorrect current password. 😛'
           });
         } else {
-          console.log('fail');
         }
       });
     }

@@ -77,10 +77,8 @@ const DetailsScreen = (props) => {
 
   useEffect(() => {
     FeedAPI.getHomePosts().then(res => {
-      console.log(res.data);
       setPosts(res.data);
     }, e => {
-      console.log(e, '------------------');
     })
   }, [isFocused]);
 

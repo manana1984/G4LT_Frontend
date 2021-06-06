@@ -20,11 +20,9 @@ const ChatScreen = (props, { navigation }) => {
 
     FeedAPI.getRequestUsers().then(res => {
 
-      console.log('reque', res.data)
       setRequestUsers(res.data);
 
     }).catch(err => {
-      console.log('error requested users')
 
     });
 
@@ -33,12 +31,7 @@ const ChatScreen = (props, { navigation }) => {
 
 
     }).catch(err => {
-      console.log('error joined users')
     });
-    // let tempRequestUsers = FeedAPI.getRequestUsers();
-    // console.log('AAAAAAAAAAA', tempJoinedUsers?.data, tempRequestUsers?.data);
-    // setJoinedUsers(tempJoinedUsers);
-    // setRequestUsers(tempRequestUsers);
   }, [isFocused, callAgain]);
 
 
@@ -71,14 +64,12 @@ const ChatScreen = (props, { navigation }) => {
     FeedAPI.approvedUser(username).then(res => {
       setCallAgain(!callAgain);
     }).catch(err => {
-      console.log("error")
     })
   }
   const onClickDecline = (username) => {
     FeedAPI.decliendUser(username).then(res => {
       setCallAgain(!callAgain);
     }).catch(err => {
-      console.log("error")
     })
   }
   return (

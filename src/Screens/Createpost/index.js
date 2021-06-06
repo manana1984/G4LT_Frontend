@@ -213,14 +213,11 @@ const CreatepostScreen = (props, {navigation}) => {
     };
 
     FeedsAPI.public_post(body).then(response => {
-      console.log('success')
       setVisible(!visible);
       setModalVisible(true);
       props.navigation.navigate('firstPage');   
 
     }, e => {
-      console.log('error');
-      console.log(e)
     });
   }
 

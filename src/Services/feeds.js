@@ -45,7 +45,6 @@ const FeedAPI = {
         })
     },
     createFollow: (data) => {
-        console.log('created', data)
         const url = `${BaseAPIURL}/follow?following=${data}`;
         return axios({
             method: "post",
@@ -55,7 +54,6 @@ const FeedAPI = {
         })
     },
     deleteFollow: (data) => {
-        console.log('deleted', data)
         const url = `${BaseAPIURL}/follow?following=${data}`;
         return axios({
             method: "delete",
@@ -64,7 +62,6 @@ const FeedAPI = {
         })
     },
     createCircle: (data) => {
-        console.log('cirlce', data)
         const url = `${BaseAPIURL}/circle?circle=${data}`;
         return axios({
             method: "post",

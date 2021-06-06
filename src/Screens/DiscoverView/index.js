@@ -53,13 +53,10 @@ const DiscoverViewScreen = (props) => {
 
   useEffect(() => {
     FeedAPI.getUserdata(props.route.params.username).then(res => {
-      console.log('mydata', res.data);
       setUserData(res.data);
     }, e => {
-      console.log(e, '------------------');
     })
     FeedAPI.getFollowing().then(res => {
-      console.log('following', res.data);
       // setMyFollowing(res.data);
       for (i in res.data) {
         if (res.data[i].following == props.route.params.username) {
@@ -68,15 +65,10 @@ const DiscoverViewScreen = (props) => {
         }
       }
     }, e => {
-      console.log(e, '------------------');
     })
     FeedAPI.getCircle().then(res => {
-      console.log('circle', res.data);
-      console.log('circle', props.route.params.username);
-      // setMyCircle(res.data);
       for (i in res.data) {
         if (res.data[i].circle == props.route.params.username) {
-          console.log('adaaaaaaaaaaaaaa', props.route.params.username)
           if (res.data[i].approved == null) {
             setStatusCircle("Pending Circle");
           } else if (res.data[i].approved == false) {
@@ -88,7 +80,6 @@ const DiscoverViewScreen = (props) => {
         }
       }
     }, e => {
-      console.log(e, '------------------');
     })
   }, [isFocused]);
 
@@ -96,24 +87,19 @@ const DiscoverViewScreen = (props) => {
 
 
   const onClickFollowBtn = (data) => {
-    console.log(data);
     if (statusFollowing == "Follow") {
       FeedAPI.createFollow(data)
         .then(res => {
-          console.log('response', res.data);
           setIsFollowed(!isFollowed);
           setStatusFollowing("Following");
 
         }).catch(err => {
-          console.log('error----------', err)
         })
     } else {
       FeedAPI.deleteFollow(data)
         .then(res => {
-          console.log('response', res.data);
           setStatusFollowing("Follow");
         }).catch(err => {
-          console.log('error----------', err)
         })
     }
   }
@@ -124,12 +110,10 @@ const DiscoverViewScreen = (props) => {
           // setIsCircle(true);
           setStatusCircle("Pending Circle")
         }).catch(err => {
-          console.log('error----------', err)
         })
     }
   }
   const checkFollow = (username, following) => {
-    console.log(username, user.username)
     let checked = false;
     for (i in following) {
       if (following[i].following == user.username) {

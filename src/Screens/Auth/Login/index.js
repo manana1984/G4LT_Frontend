@@ -32,7 +32,6 @@ const LoginScreen = ({ navigation, login }) => {
         return;
       }
       AuthAPI.verifyAccesstoken().then(user => {
-        console.log(user, '-------------------')
         login(user);
       }, e => console.log(e));      
     }, e => {
