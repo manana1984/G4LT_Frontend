@@ -24,11 +24,19 @@ export default StyleSheet.create({
         fontSize: 17
     },
     input2: {
-        width: width /25 * 19,
+        width: width /25 * 17,
         paddingHorizontal: 17,
-        marginLeft: 15,
+        marginLeft: 40,
         fontSize: 17,
-        marginTop: 3,
+        marginTop: -8,
+        marginBottom: 8
+    },
+    input3: {
+        width: width /25 * 17,
+        paddingHorizontal: 17,
+        marginLeft: 40,
+        fontSize: 17,
+        marginTop: -19,
         marginBottom: 8
     },
     MainContainer: {
@@ -54,8 +62,20 @@ export default StyleSheet.create({
         flexWrap: 'wrap',
         width: width* 1,
         marginRight: -100,
-        marginTop: 10
+        marginTop: 15
         // paddingEnd: 10
+    },
+    comment1: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: width* 1,
+        marginRight: -100,
+        marginTop: 5
+        // paddingEnd: 10
+        // flex: 1,
+        // paddingLeft: 10,
+        // paddingRight: 10,
     },
     tinyLogo: {
         // alignItems: 'center',
@@ -66,7 +86,8 @@ export default StyleSheet.create({
         // borderRadius:20,
         borderWidth: .1,
         borderColor: 'grey',
-        margin: 20
+        marginLeft: 20,
+        marginTop: 9
     },
     tinyLogo1: {
         // alignItems: 'center',
@@ -87,17 +108,21 @@ export default StyleSheet.create({
         marginRight: 50
     },
     edit:{
-        paddingTop: 7,
+        marginTop: -6,
         paddingRight: 3 
     },
     delete:{
-        paddingTop: 7,
+        marginTop: -6,
         marginLeft: 3
         // marginRight: 20
     },
     name: {
         fontWeight: "bold",
         fontSize: 19,
-        marginLeft: 20
+        marginLeft: 5
+    },
+    textInputStyle:{
+       height: 50,
+       width: width /25 * 17,
     }
 });

@@ -11,6 +11,8 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
   const { user } = props;
   const [desText, setDesText] = useState("");
   const [comments, setComments] = useState([]);
+  const [editCommentTxt, setEditCommentTxt] = useState('');
+  const [isEdit, setIsEdit] = useState([]);
   useLayoutEffect(() => {
 
     props.navigation.setOptions({
@@ -42,6 +44,7 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
     temp.push(data);
     setDesText("");
     setComments(temp);
+    setIsEdit(isEdit.concat(false));
   }
 
   const commentDelete = (index) => {
@@ -51,9 +54,21 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
   }
 
   const commentEdit = (index) => {
-    <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
-      <Ionicons name='check' size={17} color='#800080' />
-    </TouchableOpacity>
+    console.log('comment', index, isEdit, comments[index]);
+    if (!isEdit[index]) {
+      const temp = [...isEdit];
+      temp[index] = !isEdit[index];
+      setIsEdit(temp);
+      setEditCommentTxt(comments[index]);
+    }
+    else {
+      let tempEdit = [...isEdit];
+      tempEdit[index] = !isEdit[index];
+      setIsEdit(tempEdit);
+      const temp = [...comments];
+      temp[index] = editCommentTxt;
+      setComments(temp);
+    }
   }
 
   return (
@@ -82,11 +97,23 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                   <Text style={styles.name}> {user.firstname} {user.lastname}  </Text>
                   <View>{created_at}</View>
                 </View>
-                <View style={styles.comment}>
-                  <Text style={styles.input2} key={comment}>{comment}</Text>
-                  <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
-                    <Ionicons name='edit' size={17} color='#800080' />
-                  </TouchableOpacity>
+                <View style={styles.comment1}>
+                  {isEdit[index] ?
+                    // <View style={styles.input2}>
+                      <TextInput multiline={true} numberOfLines={0} style={styles.input3}
+                        onChangeText={x => setEditCommentTxt(x)} value={editCommentTxt} />
+                    // </View>
+                    :
+                    <Text style={styles.input2} key={comment}>{comment}</Text>
+                  }
+                  {isEdit[index] ?
+                    <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
+                      <Ionicons name='check' size={17} color='#800080' />
+                    </TouchableOpacity> :
+                    <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
+                      <Ionicons name='edit' size={17} color='#800080' />
+                    </TouchableOpacity>
+                  }
                   <TouchableOpacity style={styles.delete} onPress={() => commentDelete(index)}>
                     <Ionicons name='delete' size={17} color='#800080' />
                   </TouchableOpacity>
@@ -99,7 +126,14 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
       <View style={styles.line}  >
         <View style={styles.input1}>
           <TextInput multiline={true} numberOfLines={4} placeholder="Start typing..."
-            onChangeText={x => setDesText(x)} value={desText} />
+            onChangeText={x => {
+              setDesText(x);
+              let temp = [];
+              for (let i = 0; i < isEdit.length; i++) {
+                temp.push(false);
+              }
+              setIsEdit(temp);
+            }} value={desText} />
         </View>
         <View style={styles.icon1}>
           {/* <Ionicons name='plus-circle' size={27} color='#800080' /> */}
