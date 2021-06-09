@@ -11,7 +11,6 @@ export default StyleSheet.create({
     avatar: {
         alignItems: 'center',        
         justifyContent: 'center',
-        // paddingLeft: 65,
         paddingRight: 30,
         marginTop: 15
     },
@@ -31,7 +30,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
         marginLeft: 35,
-        marginTop: 10
+        marginTop: -20
     },
     text: {
         fontSize: 17,
@@ -48,8 +47,21 @@ export default StyleSheet.create({
         borderWidth: 0.5,
         borderRadius: 5
     },
+    view1: {
+        flexDirection: 'column',
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginRight: 35,
+        height: 100,
+        width: width*.8,
+        margin: 5,
+        borderWidth: 0.5,
+        borderRadius: 5,
+    },
     alert: {
         color: 'red',
         paddingBottom: 5
-    }
+    },
 });

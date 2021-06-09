@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity, ScrollView, Text, Image, View } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import { useRef, useLayoutEffect, useState } from 'react';
-import Ionicons from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ListItem, Avatar } from 'react-native-elements';
 import { connectAuth, connectGeneralStatesToProps, connectAuthDescription } from '../../Redux/connects';
 import ImageView from 'react-native-image-view';
@@ -10,7 +11,6 @@ import ImageView from 'react-native-image-view';
 import styles from './styles';
 import { Dimensions } from 'react-native';
 import FeedAPI from '../../Services/feeds';
-import { useIsFocused } from "@react-navigation/native";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -41,7 +41,8 @@ const ProfileComponent = ({ avatar, navigation, username, name, firstname, lastn
     </TouchableOpacity>
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23, marginBottom: 17 }} >
       {attachments.includes(',data') ? attachments.split(',data').map((item, index) => (
-        <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}><Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} /></TouchableOpacity>
+        <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}>
+          <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} /></TouchableOpacity>
       )) : (
         <TouchableOpacity onPress={() => selectImage(postIndex, 0)}><Image style={styles.tinyLogo} source={{ uri: attachments }} /></TouchableOpacity>
       )}
@@ -81,7 +82,7 @@ const DiscoverScreen = (props) => {
       headerTitle: "Discover",
       headerLeft: () => (
         <TouchableOpacity onPress={() => props.navigation.navigate('first')} style={{ marginLeft: 10 }}>
-          <Ionicons name='chevron-left' size={24} color='Black' />
+          <Ionicons name='chevron-back' size={24} color='back' />
         </TouchableOpacity>
       ),
       headerRight: () => (

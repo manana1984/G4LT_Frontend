@@ -40,6 +40,7 @@ const PersonalProfileScreen = (props) => {
   const [lastName, setLastName] = useState(user.lastname);
   const [username, setUsername] = useState(user.username);
   const [number, setNumber] = useState(user.phone_number);
+  const [content, setContent] = useState(user.content);
   const [alert, setAlert] = useState('');
   const [picture, setPicture] = useState(user.avatar || 'https://faces/twitter/ladylexy/128.jpg');
 
@@ -81,7 +82,7 @@ const PersonalProfileScreen = (props) => {
       setAlert("Please input lastname");
       return
     }
-
+    
     if (number == '') {
       setAlert("please input phone number");
       return
@@ -94,12 +95,16 @@ const PersonalProfileScreen = (props) => {
       setAlert("please input correct phone number");
       return
     }
+    if (content == '') {
+      setAlert("Please input content");
+      return
+    }
     if (picture == ''){
       setAlert("please input Avatar");
       return
     }
 
-    if (firstName === user.firstname && lastName === user.lastname && number === user.phone_number && picture === user.avatar) {
+    if (firstName === user.firstname && lastName === user.lastname && number === user.phone_number && picture === user.avatar && content === user.content) {
       Toast.show({
         type: 'error',
         text1: 'Sorry',
@@ -110,14 +115,16 @@ const PersonalProfileScreen = (props) => {
 
     setAlert("");
 
-    Http.profile(firstName, lastName, username, number, picture).then(response => {
+    Http.profile(firstName, lastName, username, number, content, picture).then(response => {
+      console.log('AAAAA', response);
       props.updateUser({
         ...user,
         firstname: firstName,
         lastname: lastName,
         username: username,
         phone_number: number,
-        picture: picture
+        picture: picture,
+        about_me: content,
       });
       Toast.show({
         text1: 'Congratulation',
@@ -125,6 +132,7 @@ const PersonalProfileScreen = (props) => {
         onPress: () => { props.navigation.navigate('profile'); }
       });
     }, e => {
+      console.log('error', e);
     });
   }
 
@@ -209,18 +217,22 @@ const PersonalProfileScreen = (props) => {
           <Text style={styles.alert}>{alert}</Text>
           <Text style={styles.text}>Name *</Text>
           <View style={styles.view}>
-            <TextInput placeholder="First Name" style={styles.input} onChangeText={x => setFirstName(x)} value={firstName} />
+            <TextInput placeholder="First Name"  onChangeText={x => setFirstName(x)} value={firstName} />
           </View>
           <View style={styles.view}>
-            <TextInput placeholder="Last Name" style={styles.input} onChangeText={x => setLastName(x)} value={lastName} />
+            <TextInput placeholder="Last Name"  onChangeText={x => setLastName(x)} value={lastName} />
           </View>
           <Text style={styles.text}>UserName *</Text>
           <View style={styles.view}>
-            <TextInput placeholder="User Name" style={styles.input} onChangeText={x => setUsername(x)} value={username} editable={false} />
+            <TextInput placeholder="User Name"  onChangeText={x => setUsername(x)} value={username} editable={false} />
           </View>
           <Text style={styles.text}>Phone Number *</Text>
           <View style={styles.view}>
-            <TextInput placeholder="Phone Number" style={styles.input} onChangeText={x => setNumber(x)} value={number} />
+            <TextInput placeholder="Phone Number"  onChangeText={x => setNumber(x)} value={number} />
+          </View>
+          <Text style={styles.text}>About Me *</Text>
+          <View style={styles.view1}>
+            <TextInput placeholder="Content" style={{height: '100%', width: '100%'}} multiline = {true} numberOfLines = {4} onChangeText={x => setContent(x)} value={content} />
           </View>
         </ScrollView>
       </View>

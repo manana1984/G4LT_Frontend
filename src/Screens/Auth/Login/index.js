@@ -31,7 +31,11 @@ const LoginScreen = ({ navigation, login }) => {
         setAlert("Incorrect credential");
         return;
       }
-      AuthAPI.verifyAccesstoken().then(user => {
+      // AuthAPI.verifyAccesstoken().then(user => {
+      //   login(user);
+      // }, e => console.log(e));      
+      AuthAPI.getUser(email).then(user => {
+        console.log('user', user);
         login(user);
       }, e => console.log(e));      
     }, e => {

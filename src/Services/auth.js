@@ -43,6 +43,10 @@ const AuthAPI = {
             headers: { "Content-Type": "application/json" },
         })
     },
+    getUser: async (username) => {
+        const url = `${BaseAPIURL}/users/${username}`;
+        return axios.get(url).then(res => res.data, e => e);
+    },
     verifyAccesstoken: async () => {
         const accessToken = await getAccessToken();
         const url = `${BaseAPIURL}/auth/verify-access-token/${accessToken}`;

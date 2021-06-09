@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity, ScrollView, Text, Image, View } from 'react-native';
-
 import { useIsFocused } from "@react-navigation/native";
-
 import { useRef, useLayoutEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ListItem, Avatar } from 'react-native-elements';
@@ -13,11 +11,16 @@ import ImageView from 'react-native-image-view';
 import styles from './styles';
 import { Dimensions } from 'react-native';
 import FeedAPI from '../../Services/feeds';
+import { set } from 'react-native-reanimated';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const ProfileComponent = ({ avatar, currentusername, navigation, username, firstname, lastname, description, location, attachments, created_at, selectImage, postIndex }) => {
+const ProfileComponent = ({ 
+  avatar, currentusername, navigation, username, firstname, lastname, 
+  likes, comments, description, location, attachments, created_at, selectImage, postIndex,
+  setLikes, setComments, _id, status,
+}) => {
   const goTonaviation = (username) => {
     if (username != currentusername) {
       navigation.navigate('DiscoverView1', { username: username })
@@ -53,13 +56,13 @@ const ProfileComponent = ({ avatar, currentusername, navigation, username, first
       )}
     </View>
     <TouchableOpacity style={styles.Avatar2} >
-      <View >
-        <Ionicons name='thumbs-up-sharp' color='#800080' size={17} />
-      </View>
-        <Text style={styles.math}>0</Text>
-      <TouchableOpacity style={styles.Avatar3} >
+      <TouchableOpacity onPress={() =>{setLikes(_id)}}>
+        <Ionicons name='thumbs-up-sharp' color={status? '#800080': 'blue'} size={17} />
+      </TouchableOpacity>
+        <Text style={styles.math}>{likes}</Text>
+      <TouchableOpacity style={styles.Avatar3} onPress={() =>{setComments(_id)}} >
         <Ionicons name='chatbubble-outline' color='#800080' size={17} />
-        <Text style={styles.math}>0</Text>
+        <Text style={styles.math}>{comments}</Text>
       </TouchableOpacity>
     </TouchableOpacity>
   </View>
@@ -73,11 +76,19 @@ const DetailsScreen = (props) => {
   const [images, setImages] = useState([]);
 
   const [posts, setPosts] = useState([]);
+  const [commentStatus, setCommentStatus] = useState([]);
+
   const isFocused = useIsFocused();
 
   useEffect(() => {
     FeedAPI.getHomePosts().then(res => {
       setPosts(res.data);
+      let temp = [];
+      for(let i = 0; i< res.data.length; i++) {
+        temp.push(true);
+      }
+      setCommentStatus(temp);
+      console.log('res.data', res.data);
     }, e => {
     })
   }, [isFocused]);
@@ -134,11 +145,37 @@ const DetailsScreen = (props) => {
     setSelectedImageIndex(imageIndex);
   };
 
+  const setComments = (index) => {
+    console.log('AAAAAA');
+  }
+
+  const setLikes = (index) => {
+    const temp = [...commentStatus];
+    temp[index] = !temp[index];
+    setCommentStatus(temp);
+    FeedAPI.setLikes(posts[index].id).then(res => {
+      const cmt = [...posts];
+      if(res.data.result ==='success') {
+        if(res.data.action === 'like') {
+          cmt[index].likes++;
+        }
+        else if(res.data.action === 'dislike') {
+          cmt[index].likes--;
+        }
+        setPosts(cmt);
+      }
+    }).catch(e=> {
+      console.log('error', e);
+    });
+  }
+
   const renderFileUri = () => {
     return (
       <SafeAreaView style={styles.backgroundcomponent}>
-        {posts.map((post, pi) => <ProfileComponent key={pi} currentusername={user.username} username={post.username} location={post.location} attachments={post.attachments} description={post.description} postIndex={pi}
+        {posts.map((post, pi) => <ProfileComponent key={pi} 
+          currentusername={user.username} username={post.username} likes={post.likes} comments={post.comments} location={post.location} attachments={post.attachments} description={post.description} postIndex={pi}
           avatar={post.avatar} lastname={post.lastname} firstname={post.firstname} navigation={navigation} name={`${user.firstname} ${user.lastname}`} created_at={post.created_at} selectImage={selectImage}
+          setComments={setComments} setLikes={setLikes} _id={pi} status={commentStatus[pi]}
         />)}
 
         {selectedImageIndex >= 0 && <ImageView images={images} imageIndex={Math.max(selectedImageIndex, 0)} onClose={() => setSelectedImageIndex(-1)} />}

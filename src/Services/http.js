@@ -21,12 +21,14 @@ const Http = {
         })
     },
 
-    profile: (firstname, lastname, username, number) => {
+    profile: (firstname, lastname, username, number, content) => {
+        console.log('DATA', firstname, lastname, username, number, content);
         let data = {
             firstname: firstname,
             lastname: lastname,
             username: username,
             phone_number: number,
+            about_me: content,
             // is_active:1, // email verificaion passed
         }
         const profileURL = `${BaseAPIURL}/setting/profile`;

@@ -64,7 +64,7 @@ const ProfileScreen = (props) => {
       </View>
       <View>
         <Text style={styles.name2}>About {user.firstname} {user.lastname}</Text>
-        <Text style={styles.name3}>She is from Armenia, Her name is Manana Asatrain and the ages is 31.</Text>
+        <Text style={styles.name3}>{user.about_me}</Text>
       </View>
     </SafeAreaView>
   );

@@ -13,6 +13,12 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
   const [comments, setComments] = useState([]);
   const [editCommentTxt, setEditCommentTxt] = useState('');
   const [isEdit, setIsEdit] = useState([]);
+
+  useEffect(()=> {
+    // FeedsAPI.getComments()
+    console.log('user', user, props);
+  }, []);
+
   useLayoutEffect(() => {
 
     props.navigation.setOptions({
@@ -107,14 +113,14 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                   }
                   {isEdit[index] ?
                     <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
-                      <Ionicons name='check' size={17} color='#800080' />
+                      <Ionicons name='check-square' size={17} color='#800080' />
                     </TouchableOpacity> :
                     <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
                       <Ionicons name='edit' size={17} color='#800080' />
                     </TouchableOpacity>
                   }
                   <TouchableOpacity style={styles.delete} onPress={() => commentDelete(index)}>
-                    <Ionicons name='delete' size={17} color='#800080' />
+                    <Ionicons name='trash-2' size={17} color='#800080' />
                   </TouchableOpacity>
                 </View>
               </View>

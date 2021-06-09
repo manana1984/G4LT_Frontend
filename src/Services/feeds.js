@@ -122,6 +122,14 @@ const FeedAPI = {
             headers: { "Content-Type": "application/json" },
         })
     },
+    setLikes: (id) => {
+        const url = `${BaseAPIURL}/likes?post_id=${id}`
+        return axios({
+            method: "post",
+            url: url,
+            headers: { "Content-Type": "application/json" },
+        })
+    }
 }
 
 export default FeedAPI;
