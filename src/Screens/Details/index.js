@@ -19,7 +19,7 @@ const height = Dimensions.get('window').height;
 const ProfileComponent = ({ 
   avatar, currentusername, navigation, username, firstname, lastname, 
   likes, comments, description, location, attachments, created_at, selectImage, postIndex,
-  setLikes, setComments, _id, status,
+  setLikes, setComments, _id, status, id,
 }) => {
   const goTonaviation = (username) => {
     if (username != currentusername) {
@@ -43,7 +43,7 @@ const ProfileComponent = ({
         </ListItem.Content>
       </TouchableOpacity>
     </View >
-    <TouchableOpacity onPress={() => navigation.navigate('description1', { description: description, attachments: attachments })}>
+    <TouchableOpacity onPress={() => navigation.navigate('description1', { description: description, attachments: attachments, post_id: id })}>
       <View style={styles.line}>
         <Text style={styles.input}>{description}</Text>
       </View>
@@ -175,7 +175,7 @@ const DetailsScreen = (props) => {
         {posts.map((post, pi) => <ProfileComponent key={pi} 
           currentusername={user.username} username={post.username} likes={post.likes} comments={post.comments} location={post.location} attachments={post.attachments} description={post.description} postIndex={pi}
           avatar={post.avatar} lastname={post.lastname} firstname={post.firstname} navigation={navigation} name={`${user.firstname} ${user.lastname}`} created_at={post.created_at} selectImage={selectImage}
-          setComments={setComments} setLikes={setLikes} _id={pi} status={commentStatus[pi]}
+          setComments={setComments} setLikes={setLikes} _id={pi} status={commentStatus[pi]} id={post.id}
         />)}
 
         {selectedImageIndex >= 0 && <ImageView images={images} imageIndex={Math.max(selectedImageIndex, 0)} onClose={() => setSelectedImageIndex(-1)} />}

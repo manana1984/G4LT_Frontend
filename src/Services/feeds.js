@@ -129,6 +129,15 @@ const FeedAPI = {
             url: url,
             headers: { "Content-Type": "application/json" },
         })
+    },
+    createComment: (data) => {
+        console.log('data', data);
+        const url = `${BaseAPIURL}/comments?post_id=${data.post_id}&content=${data.content}`
+        return axios({
+            method: "post",
+            url: url,
+            headers: { "Content-Type": "application/json" },
+        })
     }
 }
 

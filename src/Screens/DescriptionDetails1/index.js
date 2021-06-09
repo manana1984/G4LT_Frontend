@@ -51,6 +51,12 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
     setDesText("");
     setComments(temp);
     setIsEdit(isEdit.concat(false));
+    FeedsAPI.createComment({post_id: props.route.params.post_id, content: data})
+      .then(res=> {
+        console.log('createComment', res);
+      }).catch(err=> {
+        console.log('error', err)
+      });
   }
 
   const commentDelete = (index) => {

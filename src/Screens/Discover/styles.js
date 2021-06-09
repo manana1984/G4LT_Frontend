@@ -61,7 +61,8 @@ export default StyleSheet.create({
         paddingHorizontal: 5,
         marginTop: 11,
         marginLeft: 15,
-        fontSize: 17
+        fontSize: 17,
+        height: 43
     },
     tinyLogo: {
         // alignItems: 'center',
