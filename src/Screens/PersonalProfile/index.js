@@ -116,7 +116,6 @@ const PersonalProfileScreen = (props) => {
     setAlert("");
 
     Http.profile(firstName, lastName, username, number, content, picture).then(response => {
-      console.log('AAAAA', response);
       props.updateUser({
         ...user,
         firstname: firstName,
@@ -232,7 +231,7 @@ const PersonalProfileScreen = (props) => {
           </View>
           <Text style={styles.text}>About Me *</Text>
           <View style={styles.view1}>
-            <TextInput placeholder="Content" style={{height: '100%', width: '100%'}} multiline = {true} numberOfLines = {4} onChangeText={x => setContent(x)} value={content} />
+            <TextInput placeholder="Content"  multiline = {true} numberOfLines = {4} onChangeText={x => setContent(x)} value={content} />
           </View>
         </ScrollView>
       </View>

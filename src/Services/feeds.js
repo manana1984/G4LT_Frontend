@@ -130,15 +130,40 @@ const FeedAPI = {
             headers: { "Content-Type": "application/json" },
         })
     },
-    createComment: (data) => {
-        console.log('data', data);
-        const url = `${BaseAPIURL}/comments?post_id=${data.post_id}&content=${data.content}`
-        return axios({
-            method: "post",
-            url: url,
-            headers: { "Content-Type": "application/json" },
+    getPostDetail: (id) => {
+        const url = `${BaseAPIURL}/posts/detail/${id}`
+        return axios.get(url)
+    },
+    createComment: (params) => {
+        const url = `${BaseAPIURL}/comments`
+        return axios.post(url, params, {
+            "headers": {
+                "content-type": "application/json",
+            },
         })
-    }
+    },
+    updateComment: (params) => {
+        const url = `${BaseAPIURL}/comments`
+        return axios.patch(url, params, {
+            "headers": {
+                "content-type": "application/json",
+            },
+        })
+    },
+    deleteComment: (id) => {
+        console.log('params', id);
+        const url = `${BaseAPIURL}/comments`
+        return axios({
+            method: 'DELETE',
+            url: url,
+            data: {
+                comment_id: id,
+            },
+            headers: {
+                "content-type": "application/json",
+            },
+        })
+    },
 }
 
 export default FeedAPI;

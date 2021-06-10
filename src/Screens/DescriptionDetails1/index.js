@@ -6,17 +6,36 @@ import { ListItem, Avatar } from 'react-native-elements';
 import { connectAuth, connectGeneralStatesToProps, connectAuthDescription } from '../../Redux/connects';
 import styles from './styles';
 import FeedsAPI from '../../Services/feeds';
+import FeedAPI from '../../Services/feeds';
 
 const DescriptionDetails1Screen = (props, { created_at }) => {
   const { user } = props;
+  const { post_id, description, attachments } = props.route.params;
   const [desText, setDesText] = useState("");
   const [comments, setComments] = useState([]);
   const [editCommentTxt, setEditCommentTxt] = useState('');
   const [isEdit, setIsEdit] = useState([]);
 
-  useEffect(()=> {
-    // FeedsAPI.getComments()
-    console.log('user', user, props);
+  useEffect(() => {
+    FeedsAPI.getPostDetail(post_id)
+      .then(res => {
+        var tempComments = res.data.comments;
+        var tempReplies = res.data.replies;
+        tempComments.sort(function (a, b) {
+          return a.created_at < b.created_at;
+        });
+
+        for (let i = 0; i < tempComments.length; i++) {
+          var temp = [...tempReplies];
+          var filterValue = temp.filter(rep => rep.comment_id === tempComments[i].id);
+          filterValue.sort((a, b) => a.created_at < b.created_at);
+          tempComments[i]['replies'] = filterValue;
+        }
+        console.log(tempComments);
+        setComments(tempComments);
+      }).catch(err => {
+        console.log('error', err)
+      })
   }, []);
 
   useLayoutEffect(() => {
@@ -46,39 +65,51 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
   });
 
   const setComment = data => {
-    const temp = [...comments];
-    temp.push(data);
     setDesText("");
-    setComments(temp);
-    setIsEdit(isEdit.concat(false));
-    FeedsAPI.createComment({post_id: props.route.params.post_id, content: data})
-      .then(res=> {
-        console.log('createComment', res);
-      }).catch(err=> {
+    FeedsAPI.createComment(JSON.stringify({ post_id: post_id, content: data }))
+      .then(res => {
+        const temp = [...comments];
+        temp.push(res.data);
+        setComments(temp);
+        setIsEdit(isEdit.concat(false));
+      }).catch(err => {
         console.log('error', err)
       });
   }
 
   const commentDelete = (index) => {
-    const temp = [...comments];
-    temp.splice(index, 1);
-    setComments(temp);
+    // console.log('comment_id', comments[index].id);
+    FeedAPI.deleteComment(comments[index].id)
+      .then(res => {
+        const temp = [...comments];
+        temp.splice(index, 1);
+        setComments(temp);
+      }).catch(err => {
+        console.log('error', err)
+      })
   }
 
   const commentEdit = (index) => {
     if (!isEdit[index]) {
       const temp = [...isEdit];
-      temp[index] = !isEdit[index];
+      let i = temp.indexOf(true);
+      if (i > -1) temp[i] = false;
+      temp[index] = true;
       setIsEdit(temp);
-      setEditCommentTxt(comments[index]);
+      setEditCommentTxt(comments[index].content);
     }
     else {
       let tempEdit = [...isEdit];
-      tempEdit[index] = !isEdit[index];
+      tempEdit[index] = false;
       setIsEdit(tempEdit);
-      const temp = [...comments];
-      temp[index] = editCommentTxt;
-      setComments(temp);
+      FeedAPI.updateComment(JSON.stringify({ comment_id: comments[index].id, content: editCommentTxt }))
+        .then(res => {
+          const temp = [...comments];
+          temp[index].content = editCommentTxt;
+          setComments(temp);
+        }).catch(err => {
+          console.log('error', err)
+        })
     }
   }
 
@@ -87,14 +118,14 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
     <View style={styles.MainContainer}>
       <ScrollView>
         <View>
-          <Text style={styles.input}> {props.route.params.description}</Text>
+          <Text style={styles.input}> {description}</Text>
         </View>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23 }} >
           {
-            props.route.params.attachments.includes(',data') ? props.route.params.attachments.split(',data').map((item, index) => (
+            attachments.includes(',data') ? attachments.split(',data').map((item, index) => (
               <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} />
             )) : (
-              <Image style={styles.tinyLogo1} source={{ uri: props.route.params.attachments }} />
+              <Image style={styles.tinyLogo1} source={{ uri: attachments }} />
             )
           }
           {
@@ -111,11 +142,11 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                 <View style={styles.comment1}>
                   {isEdit[index] ?
                     // <View style={styles.input2}>
-                      <TextInput multiline={true} numberOfLines={0} style={styles.input3}
-                        onChangeText={x => setEditCommentTxt(x)} value={editCommentTxt} />
+                    <TextInput multiline={true} numberOfLines={0} style={styles.input3}
+                      onChangeText={x => setEditCommentTxt(x)} value={editCommentTxt} />
                     // </View>
                     :
-                    <Text style={styles.input2} key={comment}>{comment}</Text>
+                    <Text style={styles.input2} key={comment.id}>{comment.content}</Text>
                   }
                   {isEdit[index] ?
                     <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>

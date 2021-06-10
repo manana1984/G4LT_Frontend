@@ -8,6 +8,26 @@ export default StyleSheet.create({
         paddingTop: 10,
         paddingLeft: 25
     },
+    profile: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        marginLeft: 35,
+        marginTop: -20
+    },
+    view1: {
+        flexDirection: 'column',
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginRight: 35,
+        height: 100,
+        width: width*.8,
+        margin: 5,
+        borderWidth: 0.5,
+        borderRadius: 5,
+    },
     avatar: {
         alignItems: 'center',        
         justifyContent: 'center',
@@ -25,13 +45,6 @@ export default StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
     },
-    profile: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        marginLeft: 35,
-        marginTop: -20
-    },
     text: {
         fontSize: 17,
         marginTop: 5,
@@ -46,19 +59,6 @@ export default StyleSheet.create({
         margin: 5,
         borderWidth: 0.5,
         borderRadius: 5
-    },
-    view1: {
-        flexDirection: 'column',
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 5,
-        paddingBottom: 5,
-        marginRight: 35,
-        height: 100,
-        width: width*.8,
-        margin: 5,
-        borderWidth: 0.5,
-        borderRadius: 5,
     },
     alert: {
         color: 'red',
