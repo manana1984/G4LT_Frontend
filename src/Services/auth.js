@@ -1,5 +1,6 @@
 import axios from 'axios';
 import FormData from 'form-data';
+import jwt_decode from "jwt-decode";
 
 import { getAccessToken, removeAccessToken, setAccessToken } from '../Common/Utilities/auth.utils';
 
@@ -49,8 +50,10 @@ const AuthAPI = {
     },
     verifyAccesstoken: async () => {
         const accessToken = await getAccessToken();
-        const url = `${BaseAPIURL}/auth/verify-access-token/${accessToken}`;
-        return axios.get(url).then(res => res.data, e => e);
+        var decoded = jwt_decode(accessToken);
+        return AuthAPI.getUser(decoded.username);
+        // const url = `${BaseAPIURL}/auth/verify-access-token/${accessToken}`;
+        // return axios.get(url).then(res => res.data, e => e);
     },
     logout: async () => {
         await removeAccessToken();

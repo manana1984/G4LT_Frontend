@@ -7,15 +7,15 @@ import AuthAPI from '../../../Services/auth';
 import Ionicons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const LoginScreen = ({ navigation, login }) => {
-  const [email, setEmail] = useState('');
+  const [username, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [alert, setAlert] = useState('');
 
 
   const onLoginButtonClicked = () => {
-    // Validate Email and Password
+    // Validate username and Password
     // If validation fails, show alert messages and return
-    if (email === '') {
+    if (username === '') {
       setAlert("Please input username");
       return;
     }
@@ -26,15 +26,15 @@ const LoginScreen = ({ navigation, login }) => {
     }
 
     // If validation is succeed
-    AuthAPI.login(email, password).then(response => {
+    AuthAPI.login(username, password).then(response => {
       if (response.name === 'Error') {
         setAlert("Incorrect credential");
         return;
       }
       // AuthAPI.verifyAccesstoken().then(user => {
       //   login(user);
-      // }, e => console.log(e));      
-      AuthAPI.getUser(email).then(user => {
+      // }, e => console.log(e));
+      AuthAPI.getUser(username).then(user => {
         console.log('user', user);
         login(user);
       }, e => console.log(e));      
@@ -50,7 +50,7 @@ const LoginScreen = ({ navigation, login }) => {
         <Text style={styles.alert}>{alert}</Text>
         <View style={styles.inline}>
           <TextInput placeholder="Username" style={styles.input}
-            onChangeText={text => setEmail(text)} value={email} />
+            onChangeText={text => setUser(text)} value={username} />
         </View>
         <View style={styles.inline}>
           <TextInput placeholder="Password" style={styles.input}

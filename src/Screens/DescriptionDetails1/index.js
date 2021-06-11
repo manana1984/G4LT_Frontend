@@ -24,9 +24,7 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
       .then(res => {
         var tempComments = res.data.comments;
         var tempReplies = res.data.replies;
-        tempComments.sort(function (a, b) {
-          return a.created_at < b.created_at;
-        });
+        tempComments.sort((a, b) => a.created_at < b.created_at);
 
         for (let i = 0; i < tempComments.length; i++) {
           var temp = [...tempReplies];
@@ -34,18 +32,16 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
           filterValue.sort((a, b) => a.created_at < b.created_at);
           tempComments[i]['replies'] = filterValue;
         }
-        console.log('comments', tempComments);
         setComments(tempComments);
-
 
         // set isReplyEdit
         var tmpRplEdt = [], tmpRplCrt = [];
-        tempComments.map(tmpCmt => {
-          tmpRplEdt.push(false);
-          tmpRplEdt.push([]);
-          tmpCmt.replies.map(rpl => {
-            tmpRplEdt[tmpRplEdt.length - 1].push(false);
-          })
+        tempComments.forEach(tmpCmt => {
+          const repliesInComment = [];
+          tmpCmt.replies.forEach(element => {
+            repliesInComment.push(false);
+          });
+          tmpRplEdt.push(repliesInComment);
         });
 
         console.log('tmpRplEdt', tmpRplEdt);
@@ -84,23 +80,43 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
 
   const setComment = data => {
     setDesText("");
-    FeedsAPI.createComment(JSON.stringify({ post_id: post_id, content: data }))
-      .then(res => {
-        const temp = [...comments];
-        temp.push(res.data);
-        setComments(temp);
-        setIsEdit(isEdit.concat(false));
-      }).catch(err => {
-        console.log('error', err)
+    FeedsAPI.createComment({
+      post_id: post_id,
+      content: data
+    }).then(res => {
+      console.log(res.data, 'GSJ is awesome.')
+      const temp = comments.map(c => c);
+      temp.push({
+        ...res.data,
+        replies: []
       });
+      setComments(temp);
+      setIsEdit(isEdit.concat(false));
+    }).catch(err => {
+      console.log('error', err)
+    });
   }
 
   const commentDelete = (index) => {
-    // console.log('comment_id', comments[index].id);
     FeedAPI.deleteComment(comments[index].id)
       .then(res => {
         const temp = [...comments];
         temp.splice(index, 1);
+        setComments(temp);
+      }).catch(err => {
+        console.log('error', err)
+      })
+  }
+
+  const replyDelete = (commentIndex, replyIndex) => {
+    FeedAPI.deleteReply(comments[commentIndex].replies[replyIndex].id)
+      .then(res => {
+        const temp = comments.map((comment, ci) => {
+          return ci !== commentIndex ? comment : ({
+            ...comment,
+            replies: comment.replies.filter((reply, ri) => ri !== replyIndex)
+          });
+        });
         setComments(temp);
       }).catch(err => {
         console.log('error', err)
@@ -125,24 +141,25 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
   }
 
   const createReply = index => {
-    console.log('comment_id', comments[index].id, user);
-    FeedAPI.createReply(JSON.stringify({comment_id: comments[index].id, content: editReplyTxt}))
-      .then(res => {
-        const temp = [...isReplyCreate];
-        temp[index] = false;
-        setIsReplyCreate(temp);
-        setEditReplyTxt('');
+    FeedAPI.createReply({
+      comment_id: comments[index].id,
+      content: editReplyTxt
+    }).then(res => {
+      const temp = [...isReplyCreate];
+      temp[index] = false;
+      setIsReplyCreate(temp);
+      setEditReplyTxt('');
 
-        const temp1 = [...comments];
-        temp1[index].replies.push({ ...res.data, avatar: user.avatar, name: `${user.firstname} ${user.lastname}` });
-        setComments(temp1);
+      const temp1 = [...comments];
+      temp1[index].replies.push({ ...res.data, avatar: user.avatar, name: `${user.firstname} ${user.lastname}` });
+      setComments(temp1);
 
-        const tmpReplyEdit = [...isReplyEdit];
-        tmpReplyEdit[index].push(false);
-        setIsReplyEdit(tmpReplyEdit)
-      }).catch(err => {
-        console.log('error', err);
-      })
+      const tmpReplyEdit = [...isReplyCreate];
+      tmpReplyEdit[index].push(false);
+      setIsReplyCreate(tmpReplyEdit)
+    }).catch(err => {
+      console.log('error', err);
+    })
   }
 
   const commentEdit = (index) => {
@@ -169,10 +186,30 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
     }
   }
 
+  const replyEdit = (commentIndex, replyIndex) => {
+    if (!isReplyEdit || !isReplyEdit[commentIndex] || !isReplyEdit[commentIndex][replyIndex]) {
+      setIsReplyEdit(isReplyEdit.map((c, ci) => ci !== commentIndex ? c : c.map((r, ri) => ri !== replyIndex ? false : true)));
+      setEditReplyTxt(comments[commentIndex].replies[replyIndex].content);
+    } else {
+      setIsReplyEdit(isReplyEdit.map(a => a.map(b => false)));
+      FeedAPI.updateReply({
+        reply_id: comments[commentIndex].replies[replyIndex].id,
+        content: editReplyTxt
+      }).then(res => {
+        const temp = comments.map(c => c);
+        temp[commentIndex].replies[replyIndex].content = editReplyTxt;
+        setComments(temp);
+        setEditReplyTxt('');
+      }).catch(err => {
+        console.log('error', err);
+      })
+    }
+  }
+
   return (
 
     <View style={styles.MainContainer}>
-      <ScrollView>
+      <ScrollView style={styles.commentsContainer}>
         <View>
           <Text style={styles.input}> {description}</Text>
         </View>
@@ -226,9 +263,9 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                     <View style={styles.reply}>
                       <TouchableOpacity style={styles.Avatar} >
                         <Avatar size="small" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={0.1} rounded
-                          source={{ uri: reply.avatar || 'https://faces/twitter/ladylexy/128.jpg', }} />
+                          source={{ uri: user.avatar || 'https://faces/twitter/ladylexy/128.jpg', }} />
                       </TouchableOpacity>
-                      <Text style={styles.name}> {reply.name ?? ''} </Text>
+                      <Text style={styles.name}>  {user.firstname} {user.lastname} </Text>
                       <View style={styles.time}>
                         <Text>{reply.created_at}</Text>
                       </View>
@@ -250,23 +287,23 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                           <Ionicons name='edit' size={17} color='#800080' />
                         </TouchableOpacity>
                       }
-                      <TouchableOpacity style={styles.delete} onPress={() => replyDelete(reply.id)}>
+                      <TouchableOpacity style={styles.delete} onPress={() => replyDelete(index, _index)}>
                         <Ionicons name='trash-2' size={17} color='#800080' />
                       </TouchableOpacity>
                     </View>
                   </View>
                 ))}
                 {isReplyCreate[index] && (
-                  <>
+                  <View style={styles.reply1}>
                     <TextInput multiline={true} numberOfLines={0} style={styles.input3}
-                      onChangeText={x => setEditCommentTxt(x)} value={editCommentTxt} />
+                      onChangeText={setEditReplyTxt} value={editReplyTxt} />
                     <TouchableOpacity style={styles.edit} onPress={() => createReply(index)}>
-                      <Ionicons name='check' size={17} color='#800080' />
+                      <Ionicons name='check-square' size={17} color='#800080' />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.edit} onPress={() => cancelReply(index)}>
-                      <Ionicons name='trash' size={17} color='#800080' />
+                      <Ionicons name='x-square' size={17} color='#800080' />
                     </TouchableOpacity>
-                  </>
+                  </View>
                 )}
               </View>
             ))

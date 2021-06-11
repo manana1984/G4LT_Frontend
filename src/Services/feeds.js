@@ -164,14 +164,35 @@ const FeedAPI = {
             },
         })
     },
-    createReply: (params) => {
+    createReply: (body) => {
         const url = `${BaseAPIURL}/replies`
-        return axios.post(url, params, {
+        return axios.post(url, body, {
             "headers": {
                 "content-type": "application/json",
             },
         })
-    }
+    },
+    updateReply: (params) => {
+        const url = `${BaseAPIURL}/replies`
+        return axios.patch(url, params, {
+            "headers": {
+                "content-type": "application/json",
+            },
+        })
+    },
+    deleteReply: (id) => {
+        const url = `${BaseAPIURL}/replies`;
+        return axios({
+            method: 'DELETE',
+            url: url,
+            data: {
+                reply_id: id,
+            },
+            headers: {
+                "content-type": "application/json",
+            },
+        })
+    },
 }
 
 export default FeedAPI;

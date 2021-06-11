@@ -24,7 +24,7 @@ export default StyleSheet.create({
         fontSize: 17
     },
     input2: {
-        width: width /25 * 17,
+        width: width / 25 * 17,
         paddingHorizontal: 17,
         marginLeft: 40,
         fontSize: 17,
@@ -45,7 +45,11 @@ export default StyleSheet.create({
         // justifyContent: 'center',        
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
+    commentsContainer: {
+        marginBottom: 50
+    },
     line: {
+        backgroundColor: 'white',
         display: 'flex',
         flexDirection: 'row',
         width: '100%',
@@ -144,7 +148,8 @@ export default StyleSheet.create({
     },
     time: {
         fontSize: 19,
-        paddingRight: -5,
+        paddingRight: -25,
+        // paddingLeft: 15,
         marginTop: 5,
     },
     textInputStyle:{

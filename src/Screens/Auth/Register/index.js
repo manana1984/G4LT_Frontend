@@ -70,10 +70,11 @@ const RegisterScreen = ({ navigation }) => {
         navigation.navigate('Login')
       }
     }, e => {
+      console.log(e, e.response);
       if (e.response.status == 409) {
         setAlert("The username already exists");
       } else {
-        setAlert("the problem... ");
+        setAlert("the problem......");
       }
     });
   }

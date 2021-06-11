@@ -12,7 +12,9 @@ function Navigator({ authenticated, login }) {
   const RootNavigator = authenticated ? ClientNavigator : AuthNavigator;
 
   useEffect(() => {
-    AuthAPI.verifyAccesstoken().then(user => login(user), e => console.log(e));
+    AuthAPI.verifyAccesstoken().then(user => {
+      login(user);
+    }, e => console.log(e));
   }, []);
   
   return (
