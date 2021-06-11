@@ -144,7 +144,7 @@ export default StyleSheet.create({
     },
     time: {
         fontSize: 19,
-        marginLeft: 65,
+        paddingRight: -5,
         marginTop: 5,
     },
     textInputStyle:{
