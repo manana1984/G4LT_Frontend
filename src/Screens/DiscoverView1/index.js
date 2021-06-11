@@ -19,6 +19,7 @@ const DiscoverView1Screen = (props) => {
   });
   const [myFollowing, setMyFollowing] = []
   const [myCircle, setMyCircle] = []
+  const [num, setnum] =[]
 
   useLayoutEffect(() => {
 
@@ -66,6 +67,7 @@ const DiscoverView1Screen = (props) => {
       }
     }, e => {
     })
+    FeedAPI.getMyPosts(userdata)
     FeedAPI.getCircle().then(res => {
       for (i in res.data) {
         if (res.data[i].circle == props.route.params.username) {
@@ -149,14 +151,13 @@ const DiscoverView1Screen = (props) => {
       </View>
       <View>
         <Text style={styles.name2}>About Me</Text>
-        <Text style={styles.name3}>She is from Armenia, Her name is Manana Asatrain and the ages is 31.</Text>
+        <Text style={styles.name3}>{userdata.about_me}</Text>
       </View>
       <View style={styles.line1}>
         <Text style={styles.name1} >Followers</Text>
-
-        <Text style={styles.number}>  25  </Text>
+        <Text style={styles.number}> {userdata.following} </Text>
         <Text style={styles.name1} >Posts</Text>
-        <Text style={styles.number}>  25  </Text>
+        <Text style={styles.number}>   {userdata.post_count}  </Text>
       </View>
     </SafeAreaView>
   );

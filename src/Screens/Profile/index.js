@@ -34,6 +34,7 @@ const ProfileScreen = (props) => {
 
     });
   }, []);
+  
 
   return (
     <SafeAreaView >
@@ -58,9 +59,9 @@ const ProfileScreen = (props) => {
         </View>
       </View>
       <View style={styles.math}>
-        <Text>25</Text>
-        <Text style={styles.number1}>21</Text>
-        <Text style={styles.number2}>64</Text>
+        <Text>{user.post_count}</Text>
+        <Text style={styles.number1}>{user.following}</Text>
+        <Text style={styles.number2}>{user.follower}</Text>
       </View>
       <View>
         <Text style={styles.name2}>About {user.firstname} {user.lastname}</Text>

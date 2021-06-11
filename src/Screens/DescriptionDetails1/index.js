@@ -89,6 +89,49 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
       })
   }
 
+  const commentReplay = () => {
+    // <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23 }} >
+    //   {
+    //     comments.map((comment, index) => (
+    //       <View>
+    //         <View style={styles.comment}>
+    //           <TouchableOpacity style={styles.Avatar} >
+    //             <Avatar size="small" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={0.1} rounded
+    //               source={{ uri: user.avatar || 'https://faces/twitter/ladylexy/128.jpg', }} />
+    //           </TouchableOpacity>
+    //           <Text style={styles.name}> {user.firstname} {user.lastname}  </Text>
+    //           <View>{created_at}</View>
+    //         </View>
+    //         <View style={styles.comment1}>
+    //           {isEdit[index] ?
+    //             // <View style={styles.input2}>
+    //             <TextInput multiline={true} numberOfLines={0} style={styles.input3}
+    //               onChangeText={x => setEditCommentTxt(x)} value={editCommentTxt} />
+    //             // </View>
+    //             :
+    //             <Text style={styles.input2} key={comment.id}>{comment.content}</Text>
+    //           }
+    //           <TouchableOpacity style={styles.edit} onPress={() => commentReplay(index)}>
+    //             <Ionicons name='message-circle' size={17} color='#800080' />
+    //           </TouchableOpacity>
+    //           {isEdit[index] ?
+    //             <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
+    //               <Ionicons name='check-circle' size={17} color='blue' />
+    //             </TouchableOpacity> :
+    //             <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
+    //               <Ionicons name='edit' size={17} color='#800080' />
+    //             </TouchableOpacity>
+    //           }
+    //           <TouchableOpacity style={styles.delete} onPress={() => commentDelete(index)}>
+    //             <Ionicons name='trash-2' size={17} color='#800080' />
+    //           </TouchableOpacity>
+    //         </View>
+    //       </View>
+    //     ))
+    //   }
+    // </View>
+  }
+
   const commentEdit = (index) => {
     if (!isEdit[index]) {
       const temp = [...isEdit];
@@ -148,9 +191,12 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                     :
                     <Text style={styles.input2} key={comment.id}>{comment.content}</Text>
                   }
+                  <TouchableOpacity style={styles.edit} onPress={() => commentReplay(index)}>
+                    <Ionicons name='message-circle' size={17} color='#800080' />
+                  </TouchableOpacity>
                   {isEdit[index] ?
                     <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
-                      <Ionicons name='check-square' size={17} color='#800080' />
+                      <Ionicons name='check-circle' size={17} color='blue' />
                     </TouchableOpacity> :
                     <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
                       <Ionicons name='edit' size={17} color='#800080' />
@@ -160,6 +206,9 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                     <Ionicons name='trash-2' size={17} color='#800080' />
                   </TouchableOpacity>
                 </View>
+                {/* {comment.subcomments.map(sub => (
+                  <View />
+                ))} */}
               </View>
             ))
           }

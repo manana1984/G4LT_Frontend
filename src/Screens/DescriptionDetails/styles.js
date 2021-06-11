@@ -109,12 +109,11 @@ export default StyleSheet.create({
     },
     edit:{
         marginTop: -6,
-        paddingRight: 3 
+        paddingLeft: -1
     },
     delete:{
         marginTop: -6,
-        marginLeft: 3
-        // marginRight: 20
+        marginLeft: -2,
     },
     name: {
         fontWeight: "bold",

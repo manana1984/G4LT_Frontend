@@ -72,6 +72,7 @@ const PersonalProfileScreen = (props) => {
       console.warn(err);
     }
   };
+  
 
   const profile = () => {
     if (firstName == '') {

@@ -73,7 +73,7 @@ const RegisterScreen = ({ navigation }) => {
       if (e.response.status == 409) {
         setAlert("The username already exists");
       } else {
-        setAlert("the prolemm.. ");
+        setAlert("the problem... ");
       }
     });
   }

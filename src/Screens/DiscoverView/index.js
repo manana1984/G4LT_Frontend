@@ -56,6 +56,7 @@ const DiscoverViewScreen = (props) => {
       setUserData(res.data);
     }, e => {
     })
+    FeedAPI.getMyPosts().then(res => {})
     FeedAPI.getFollowing().then(res => {
       // setMyFollowing(res.data);
       for (i in res.data) {
@@ -148,13 +149,13 @@ const DiscoverViewScreen = (props) => {
       </View>
       <View>
         <Text style={styles.name2}>About Me</Text>
-        <Text style={styles.name3}>She is from Armenia, Her name is Manana Asatrain and the ages is 31.</Text>
+        <Text style={styles.name3}>{userdata.about_me}</Text>
       </View>
       <View style={styles.line1}>
         <Text style={styles.name1} >Followers</Text>
-        <Text style={styles.number}>  25  </Text>
+        <Text style={styles.number}>  {userdata.following}  </Text>
         <Text style={styles.name1} >Posts</Text>
-        <Text style={styles.number}>  25  </Text>
+        <Text style={styles.number}>   {userdata.post_count} </Text>
       </View>
     </SafeAreaView>
   );

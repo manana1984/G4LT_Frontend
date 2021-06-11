@@ -48,9 +48,9 @@ export default StyleSheet.create({
         paddingLeft: 95
     },
     number1: {
-        paddingLeft: 70
+        paddingLeft: 80
     },
     number2: {
-        paddingLeft: 75
+        paddingLeft: 85
     }
 });
