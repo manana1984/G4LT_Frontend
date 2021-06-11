@@ -77,6 +77,28 @@ export default StyleSheet.create({
         // paddingLeft: 10,
         // paddingRight: 10,
     },
+    reply: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: width* 1,
+        marginRight: -100,
+        marginTop: 15,
+        paddingLeft: 30
+        // paddingEnd: 10
+    },
+    reply1: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: width* 1,
+        marginRight: -100,
+        marginTop: 5,
+        // paddingEnd: 10
+        // flex: 1,
+        paddingLeft: 15,
+        // paddingRight: 10,
+    },
     tinyLogo: {
         // alignItems: 'center',
         // margin: 10,
@@ -119,6 +141,11 @@ export default StyleSheet.create({
         fontWeight: "bold",
         fontSize: 19,
         marginLeft: 5
+    },
+    time: {
+        fontSize: 19,
+        marginLeft: 65,
+        marginTop: 5,
     },
     textInputStyle:{
        height: 50,

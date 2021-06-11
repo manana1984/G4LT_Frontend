@@ -164,6 +164,14 @@ const FeedAPI = {
             },
         })
     },
+    createReply: (params) => {
+        const url = `${BaseAPIURL}/replies`
+        return axios.post(url, params, {
+            "headers": {
+                "content-type": "application/json",
+            },
+        })
+    }
 }
 
 export default FeedAPI;

@@ -14,7 +14,10 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
   const [desText, setDesText] = useState("");
   const [comments, setComments] = useState([]);
   const [editCommentTxt, setEditCommentTxt] = useState('');
+  const [editReplyTxt, setEditReplyTxt] = useState('');
   const [isEdit, setIsEdit] = useState([]);
+  const [isReplyEdit, setIsReplyEdit] = useState([]);
+  const [isReplyCreate, setIsReplyCreate] = useState([]);
 
   useEffect(() => {
     FeedsAPI.getPostDetail(post_id)
@@ -31,8 +34,23 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
           filterValue.sort((a, b) => a.created_at < b.created_at);
           tempComments[i]['replies'] = filterValue;
         }
-        console.log(tempComments);
+        console.log('comments', tempComments);
         setComments(tempComments);
+
+
+        // set isReplyEdit
+        var tmpRplEdt = [], tmpRplCrt = [];
+        tempComments.map(tmpCmt => {
+          tmpRplEdt.push(false);
+          tmpRplEdt.push([]);
+          tmpCmt.replies.map(rpl => {
+            tmpRplEdt[tmpRplEdt.length - 1].push(false);
+          })
+        });
+
+        console.log('tmpRplEdt', tmpRplEdt);
+        setIsReplyCreate(tmpRplCrt);
+        setIsReplyEdit(tmpRplEdt);
       }).catch(err => {
         console.log('error', err)
       })
@@ -89,47 +107,42 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
       })
   }
 
-  const commentReplay = () => {
-    // <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23 }} >
-    //   {
-    //     comments.map((comment, index) => (
-    //       <View>
-    //         <View style={styles.comment}>
-    //           <TouchableOpacity style={styles.Avatar} >
-    //             <Avatar size="small" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={0.1} rounded
-    //               source={{ uri: user.avatar || 'https://faces/twitter/ladylexy/128.jpg', }} />
-    //           </TouchableOpacity>
-    //           <Text style={styles.name}> {user.firstname} {user.lastname}  </Text>
-    //           <View>{created_at}</View>
-    //         </View>
-    //         <View style={styles.comment1}>
-    //           {isEdit[index] ?
-    //             // <View style={styles.input2}>
-    //             <TextInput multiline={true} numberOfLines={0} style={styles.input3}
-    //               onChangeText={x => setEditCommentTxt(x)} value={editCommentTxt} />
-    //             // </View>
-    //             :
-    //             <Text style={styles.input2} key={comment.id}>{comment.content}</Text>
-    //           }
-    //           <TouchableOpacity style={styles.edit} onPress={() => commentReplay(index)}>
-    //             <Ionicons name='message-circle' size={17} color='#800080' />
-    //           </TouchableOpacity>
-    //           {isEdit[index] ?
-    //             <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
-    //               <Ionicons name='check-circle' size={17} color='blue' />
-    //             </TouchableOpacity> :
-    //             <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
-    //               <Ionicons name='edit' size={17} color='#800080' />
-    //             </TouchableOpacity>
-    //           }
-    //           <TouchableOpacity style={styles.delete} onPress={() => commentDelete(index)}>
-    //             <Ionicons name='trash-2' size={17} color='#800080' />
-    //           </TouchableOpacity>
-    //         </View>
-    //       </View>
-    //     ))
-    //   }
-    // </View>
+  const commentReply = (index) => {
+    const temp = [...isReplyCreate];
+    temp.map(tmp => {
+      if (tmp) tmp = false;
+    });
+    temp[index] = true;
+    setIsReplyCreate(temp);
+    setEditReplyTxt('');
+  }
+
+  const cancelReply = index => {
+    const temp = [...isReplyCreate];
+    temp[index] = false;
+    setIsReplyCreate(temp);
+    setEditReplyTxt('');
+  }
+
+  const createReply = index => {
+    console.log('comment_id', comments[index].id, user);
+    FeedAPI.createReply(JSON.stringify({comment_id: comments[index].id, content: editReplyTxt}))
+      .then(res => {
+        const temp = [...isReplyCreate];
+        temp[index] = false;
+        setIsReplyCreate(temp);
+        setEditReplyTxt('');
+
+        const temp1 = [...comments];
+        temp1[index].replies.push({ ...res.data, avatar: user.avatar, name: `${user.firstname} ${user.lastname}` });
+        setComments(temp1);
+
+        const tmpReplyEdit = [...isReplyEdit];
+        tmpReplyEdit[index].push(false);
+        setIsReplyEdit(tmpReplyEdit)
+      }).catch(err => {
+        console.log('error', err);
+      })
   }
 
   const commentEdit = (index) => {
@@ -166,21 +179,23 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23 }} >
           {
             attachments.includes(',data') ? attachments.split(',data').map((item, index) => (
-              <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} />
+              <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} key={index} />
             )) : (
               <Image style={styles.tinyLogo1} source={{ uri: attachments }} />
             )
           }
           {
             comments.map((comment, index) => (
-              <View>
+              <View key={index}>
                 <View style={styles.comment}>
                   <TouchableOpacity style={styles.Avatar} >
                     <Avatar size="small" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={0.1} rounded
                       source={{ uri: user.avatar || 'https://faces/twitter/ladylexy/128.jpg', }} />
                   </TouchableOpacity>
                   <Text style={styles.name}> {user.firstname} {user.lastname}  </Text>
-                  <View>{created_at}</View>
+                  <View style={styles.time}>
+                    <Text>{comment.created_at}</Text>
+                  </View>
                 </View>
                 <View style={styles.comment1}>
                   {isEdit[index] ?
@@ -191,7 +206,7 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                     :
                     <Text style={styles.input2} key={comment.id}>{comment.content}</Text>
                   }
-                  <TouchableOpacity style={styles.edit} onPress={() => commentReplay(index)}>
+                  <TouchableOpacity style={styles.edit} onPress={() => commentReply(index)}>
                     <Ionicons name='message-circle' size={17} color='#800080' />
                   </TouchableOpacity>
                   {isEdit[index] ?
@@ -206,9 +221,53 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                     <Ionicons name='trash-2' size={17} color='#800080' />
                   </TouchableOpacity>
                 </View>
-                {/* {comment.subcomments.map(sub => (
-                  <View />
-                ))} */}
+                {comment.replies.map((reply, _index) => (
+                  <View key={_index}>
+                    <View style={styles.reply}>
+                      <TouchableOpacity style={styles.Avatar} >
+                        <Avatar size="small" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={0.1} rounded
+                          source={{ uri: reply.avatar || 'https://faces/twitter/ladylexy/128.jpg', }} />
+                      </TouchableOpacity>
+                      <Text style={styles.name}> {reply.name ?? ''} </Text>
+                      <View style={styles.time}>
+                        <Text>{reply.created_at}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.reply1}>
+                      {isReplyEdit && isReplyEdit[index] && isReplyEdit[index][_index] ?
+                        // <View style={styles.input2}>
+                        <TextInput multiline={true} numberOfLines={0} style={styles.input3}
+                          onChangeText={x => setEditReplyTxt(x)} value={editReplyTxt} />
+                        // </View>
+                        :
+                        <Text style={styles.input2} key={reply.id}>{reply.content}</Text>
+                      }
+                      {isReplyEdit && isReplyEdit[index] && isReplyEdit[index][_index] ?
+                        <TouchableOpacity style={styles.edit} onPress={() => replyEdit(index, _index)}>
+                          <Ionicons name='check-circle' size={17} color='blue' />
+                        </TouchableOpacity> :
+                        <TouchableOpacity style={styles.edit} onPress={() => replyEdit(index, _index)}>
+                          <Ionicons name='edit' size={17} color='#800080' />
+                        </TouchableOpacity>
+                      }
+                      <TouchableOpacity style={styles.delete} onPress={() => replyDelete(reply.id)}>
+                        <Ionicons name='trash-2' size={17} color='#800080' />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ))}
+                {isReplyCreate[index] && (
+                  <>
+                    <TextInput multiline={true} numberOfLines={0} style={styles.input3}
+                      onChangeText={x => setEditCommentTxt(x)} value={editCommentTxt} />
+                    <TouchableOpacity style={styles.edit} onPress={() => createReply(index)}>
+                      <Ionicons name='check' size={17} color='#800080' />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.edit} onPress={() => cancelReply(index)}>
+                      <Ionicons name='trash' size={17} color='#800080' />
+                    </TouchableOpacity>
+                  </>
+                )}
               </View>
             ))
           }
