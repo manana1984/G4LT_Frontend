@@ -4,10 +4,11 @@ const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
     container: {
-        marginTop: 150,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',
+
     },
     text: {
         fontSize:28,

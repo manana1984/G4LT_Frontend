@@ -207,6 +207,12 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
   }
 
   const commentEdit = (index) => {
+
+
+    // console.log(comments, index, user)
+
+    if(comments[index].username!==user.username) return;
+
     if (!isEdit[index]) {
       const temp = [...isEdit];
       let i = temp.indexOf(true);
@@ -231,6 +237,12 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
   }
 
   const replyEdit = (commentIndex, replyIndex) => {
+
+
+    if(comments[commentIndex].replies[replyIndex].username!==user.username) return;
+
+
+
     if (!isReplyEdit || !isReplyEdit[commentIndex] || !isReplyEdit[commentIndex][replyIndex]) {
       setIsReplyEdit(isReplyEdit.map((c, ci) => ci !== commentIndex ? c : c.map((r, ri) => ri !== replyIndex ? false : true)));
       setEditReplyTxt(comments[commentIndex].replies[replyIndex].content);
@@ -288,18 +300,18 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                     <Text style={styles.input2} key={comment.id}>{comment.content}</Text>
                   }
                   <TouchableOpacity style={styles.edit} onPress={() => commentReply(index)}>
-                    <Ionicons name='message-circle' size={17} color='#800080' />
+                    <Ionicons name='message-circle' size={23} color='#800080' />
                   </TouchableOpacity>
                   {isEdit[index] ?
                     <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
-                      <Ionicons name='check-circle' size={17} color='blue' />
+                      <Ionicons name='check-circle' size={23} color='blue' />
                     </TouchableOpacity> :
                     <TouchableOpacity style={styles.edit} onPress={() => commentEdit(index)}>
-                      <Ionicons name='edit' size={17} color='#800080' />
+                      <Ionicons name='edit' size={23} color='#800080' />
                     </TouchableOpacity>
                   }
                   <TouchableOpacity style={styles.delete} onPress={() => commentDelete(index)}>
-                    <Ionicons name='trash-2' size={17} color='#800080' />
+                    <Ionicons name='trash-2' size={23} color='#800080' />
                   </TouchableOpacity>
                 </View>
                 {comment.replies.map((reply, _index) => (
@@ -325,14 +337,14 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                       }
                       {isReplyEdit && isReplyEdit[index] && isReplyEdit[index][_index] ?
                         <TouchableOpacity style={styles.edit} onPress={() => replyEdit(index, _index)}>
-                          <Ionicons name='check-circle' size={17} color='blue' />
+                          <Ionicons name='check-circle' size={23} color='blue' />
                         </TouchableOpacity> :
                         <TouchableOpacity style={styles.edit} onPress={() => replyEdit(index, _index)}>
-                          <Ionicons name='edit' size={17} color='#800080' />
+                          <Ionicons name='edit' size={23} color='#800080' />
                         </TouchableOpacity>
                       }
                       <TouchableOpacity style={styles.delete} onPress={() => replyDelete(index, _index)}>
-                        <Ionicons name='trash-2' size={17} color='#800080' />
+                        <Ionicons name='trash-2' size={23} color='#800080' />
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -342,10 +354,10 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
                     <TextInput multiline={true} placeholder="Please...." numberOfLines={0} style={styles.input3}
                       onChangeText={setEditReplyTxt} value={editReplyTxt} />
                     <TouchableOpacity style={styles.edit} onPress={() => createReply(index)}>
-                      <Ionicons name='check-square' size={17} color='#800080' />
+                      <Ionicons name='check-square' size={23} color='#800080' />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.edit} onPress={() => cancelReply(index)}>
-                      <Ionicons name='x-square' size={17} color='#800080' />
+                      <Ionicons name='x-square' size={23} color='#800080' />
                     </TouchableOpacity>
                   </View>
                 )}

@@ -15,7 +15,7 @@ const SplashScreen = ({ navigation }) => {
 
   const objTimeOut = setTimeout(() => {
     // clearTimeout(objTimeOut);
-    navigateToScreen('Welcome');
+    navigateToScreen('Slider');
   }, 3000);
 
   return (

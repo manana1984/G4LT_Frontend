@@ -16,6 +16,7 @@ import CreatepostScreen from '../Screens/Createpost';
 import ProfileScreen from '../Screens/Profile';
 import PersonalProfileScreen from '../Screens/PersonalProfile';
 import LoginScreen from '../Screens/Auth/Login';
+import SliderScreen from '../Screens/Auth/SliderScreen';
 import SplashScreen from '../Screens/Auth/Splash';
 import WelcomeScreen from '../Screens/Auth/Welcome';
 import ForgetpassScreen from '../Screens/Auth/Forgetpass';
@@ -101,7 +102,8 @@ export const ProfileNavigator = () => (
 const AuthStack = createStackNavigator();
 const AuthInnerNavigator = ({ redirect }) => (
     <AuthStack.Navigator initialRouteName={redirect || "Splash"} headerMode="none">
-        <AuthStack.Screen name="Splash" component={SplashScreen} />
+         <AuthStack.Screen name="Splash" component={SplashScreen} />
+         <AuthStack.Screen name="Slider" component={SliderScreen} />
         <AuthStack.Screen name="Forgetpass" component={ForgetpassScreen} />
         <AuthStack.Screen name="Resetpass" component={ResetpassScreen} />
         <AuthStack.Screen name="Codepass" component={CodepassScreen} />

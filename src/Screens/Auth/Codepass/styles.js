@@ -4,7 +4,8 @@ const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
     container: {
-        marginTop: 170,
+        // marginTop: 170,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white',

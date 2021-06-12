@@ -74,7 +74,8 @@ export default StyleSheet.create({
         flexWrap: 'wrap',
         width: width* 1,
         marginRight: -100,
-        marginTop: 5
+        marginTop: 10,
+        marginLeft: -10
         // paddingEnd: 10
         // flex: 1,
         // paddingLeft: 10,
@@ -99,7 +100,7 @@ export default StyleSheet.create({
         marginTop: 5,
         // paddingEnd: 10
         // flex: 1,
-        paddingLeft: 15,
+        paddingLeft: 12,
         // paddingRight: 10,
     },
     tinyLogo: {
@@ -130,7 +131,7 @@ export default StyleSheet.create({
         marginRight: 3
     },
     icon2: {
-        marginRight: 50
+        marginRight: 20,
     },
     edit:{
         marginTop: -6,

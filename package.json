@@ -28,6 +28,7 @@
     "react-dom": "^17.0.2",
     "react-native": "0.63.0",
     "react-native-actionsheet": "^2.4.2",
+    "react-native-app-intro-slider": "^4.0.4",
     "react-native-contacts": "^7.0.0",
     "react-native-dropdown-picker": "^4.0.9",
     "react-native-elements": "^3.1.0",
