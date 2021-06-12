@@ -37,7 +37,7 @@ export default StyleSheet.create({
         marginLeft: 40,
         fontSize: 17,
         marginTop: -19,
-        marginBottom: 8
+        marginBottom: 8,
     },
     MainContainer: {
         flex: 1,
@@ -58,7 +58,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         bottom: 0,
-        marginLeft: 15
     },
     comment: {
         display: 'flex',

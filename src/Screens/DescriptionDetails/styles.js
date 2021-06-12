@@ -24,7 +24,7 @@ export default StyleSheet.create({
         fontSize: 17
     },
     input2: {
-        width: width /25 * 17,
+        width: width / 25 * 17,
         paddingHorizontal: 17,
         marginLeft: 40,
         fontSize: 17,
@@ -37,7 +37,7 @@ export default StyleSheet.create({
         marginLeft: 40,
         fontSize: 17,
         marginTop: -19,
-        marginBottom: 8
+        marginBottom: 8,
     },
     MainContainer: {
         flex: 1,
@@ -45,7 +45,11 @@ export default StyleSheet.create({
         // justifyContent: 'center',        
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
+    commentsContainer: {
+        marginBottom: 50
+    },
     line: {
+        backgroundColor: 'white',
         display: 'flex',
         flexDirection: 'row',
         width: '100%',
@@ -54,7 +58,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         bottom: 0,
-        marginLeft: 15
     },
     comment: {
         display: 'flex',
@@ -75,6 +78,28 @@ export default StyleSheet.create({
         // paddingEnd: 10
         // flex: 1,
         // paddingLeft: 10,
+        // paddingRight: 10,
+    },
+    reply: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: width* 1,
+        marginRight: -100,
+        marginTop: 15,
+        paddingLeft: 30
+        // paddingEnd: 10
+    },
+    reply1: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: width* 1,
+        marginRight: -100,
+        marginTop: 5,
+        // paddingEnd: 10
+        // flex: 1,
+        paddingLeft: 15,
         // paddingRight: 10,
     },
     tinyLogo: {
@@ -105,7 +130,7 @@ export default StyleSheet.create({
         marginRight: 3
     },
     icon2: {
-        marginRight: 50
+        marginRight: 50,
     },
     edit:{
         marginTop: -6,
@@ -119,6 +144,12 @@ export default StyleSheet.create({
         fontWeight: "bold",
         fontSize: 19,
         marginLeft: 5
+    },
+    time: {
+        fontSize: 19,
+        paddingRight: -25,
+        // paddingLeft: 15,
+        marginTop: 5,
     },
     textInputStyle:{
        height: 50,
