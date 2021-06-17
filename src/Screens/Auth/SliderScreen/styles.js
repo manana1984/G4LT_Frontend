@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 export default StyleSheet.create({
     container: {
@@ -53,7 +54,11 @@ export default StyleSheet.create({
     btnLogin2: {
         fontSize: 20,
         color: 'black'
+    },
+    image :{
+        // flex:1
+        width: width*1,
+        height: height*1
     }
-
     
 });
