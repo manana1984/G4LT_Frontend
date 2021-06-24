@@ -6,7 +6,7 @@ import { getAccessToken, removeAccessToken, setAccessToken } from '../Common/Uti
 
 // const BaseAPIURL = 'https://g4lt-backend.herokuapp.com/api/v1';
 
-const BaseAPIURL = 'http://10.0.2.2:5001/api/v1';
+const BaseAPIURL = 'http://api.g4lt.co';
 
 const AuthAPI = {
     login: async (username, password) => {
