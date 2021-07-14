@@ -49,7 +49,7 @@ const ProfileComponent = ({
       </View>
     </TouchableOpacity>
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23, marginBottom: 17 }} >
-      {attachments.includes(',data') ? attachments.split(',data').map((item, index) => (
+      {!!attachments && attachments.includes(',data') ? attachments.split(',data').map((item, index) => (
         <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}><Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} /></TouchableOpacity>
       )) : (
         <TouchableOpacity onPress={() => selectImage(postIndex, 0)}><Image style={styles.tinyLogo} source={{ uri: attachments }} /></TouchableOpacity>

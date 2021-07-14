@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // const BaseAPIURL = 'https://g4lt-backend.herokuapp.com/api/v1';
 
-const BaseAPIURL = 'http://api.g4lt.co';
+const BaseAPIURL = 'https://api.g4lt.co/api/v1';
 
 const FeedAPI = {
     public_post: (data) => {
