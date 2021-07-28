@@ -2,15 +2,17 @@ import axios from 'axios';
 
 // const BaseAPIURL = 'https://g4lt-backend.herokuapp.com/api/v1';
 
-const BaseAPIURL = 'https://api.g4lt.co/api/v1';
+const BaseAPIURL = 'http://10.0.2.2:5001/api/v1';
 
 const FeedAPI = {
     public_post: (data) => {
+        console.log(data, '--------------');
         const url = `${BaseAPIURL}/posts`;
+        
         return axios({
             method: "post",
             url: url,
-            data: { ...data, is_public: true },
+            data: data,
             headers: { "Content-Type": "application/json" },
         })
     },

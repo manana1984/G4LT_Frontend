@@ -2,7 +2,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 
 
-const BaseAPIURL = 'https://api.g4lt.co/api/v1';
+const BaseAPIURL = 'http://10.0.2.2:5001/api/v1';
 
 const Http = {
     profile: (firstname, lastname, username, number) => {
@@ -20,7 +20,7 @@ const Http = {
         })
     },
 
-    profile: (firstname, lastname, username, number, content) => {
+    profile: (firstname, lastname, username, number, content, avatar) => {
         console.log('DATA', firstname, lastname, username, number, content);
         let data = {
             firstname: firstname,
@@ -28,6 +28,7 @@ const Http = {
             username: username,
             phone_number: number,
             about_me: content,
+            avatar: avatar,
             // is_active:1, // email verificaion passed
         }
         const profileURL = `${BaseAPIURL}/setting/profile`;
@@ -35,7 +36,7 @@ const Http = {
             method: "post",
             url: profileURL,
             data: data,
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "multipart/form-data" },
         })
     },
     resetPassword: (username, current_password, new_password) => {
@@ -47,9 +48,9 @@ const Http = {
             headers: { "Content-Type": "application/json" },
         })
     },
-    uploadImage: (username, imageData) => {
-        const url = `${BaseAPIURL}/users/${username}/avatar`;
-        return axios.patch(url, { image: imageData }, {
+    updateAvatar: (image) => {
+        const url = `${BaseAPIURL}/users/update/avatar`;
+        return axios.patch(url, { image }, {
             headers: {
                 "Content-Type": "application/json",
             }

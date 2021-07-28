@@ -49,11 +49,11 @@ const ProfileComponent = ({
       </View>
     </TouchableOpacity>
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23, marginBottom: 17 }} >
-      {!!attachments && attachments.includes(',data') ? attachments.split(',data').map((item, index) => (
-        <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}><Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} /></TouchableOpacity>
-      )) : (
-        <TouchableOpacity onPress={() => selectImage(postIndex, 0)}><Image style={styles.tinyLogo} source={{ uri: attachments }} /></TouchableOpacity>
-      )}
+      {attachments.map((attachment, index) => (
+        !!attachment ? <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}>
+          <Image style={styles.tinyLogo} source={{ uri: attachment }} />
+        </TouchableOpacity> : null
+      ))}
     </View>
     <TouchableOpacity style={styles.Avatar2} >
       <TouchableOpacity onPress={() =>{setLikes(_id)}}>
@@ -68,8 +68,6 @@ const ProfileComponent = ({
   </View>
 };
 
-
-
 const DetailsScreen = (props) => {
   const { user, navigation } = props;
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
@@ -82,7 +80,12 @@ const DetailsScreen = (props) => {
 
   useEffect(() => {
     FeedAPI.getHomePosts().then(res => {
-      setPosts(res.data);
+      const newPosts = res.data.map(att => ({
+        ...att,
+        attachments: String(att.attachments || '').split(',')
+      }));
+      console.log(newPosts, '@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+      setPosts(newPosts);
       let temp = [];
       for(let i = 0; i< res.data.length; i++) {
         temp.push(true);
@@ -120,27 +123,13 @@ const DetailsScreen = (props) => {
   });
 
   const selectImage = (postIndex, imageIndex) => {
-    if (posts[postIndex].attachments.includes(',data')) {
-      setImages(posts[postIndex].attachments.split(',data').map((item, index) => index === 0 ? ({
+    if (!!posts[postIndex].attachments) {
+      setImages(posts[postIndex].attachments.map((item, index) => ({
         source: { uri: item },
         title: `title-${postIndex}-${index}`,
         width: width * 1,
         height: height * 1
-      }) : ({
-        source: { uri: `data${item}` },
-        title: `title-${postIndex}-${index}`,
-        width: width * 1,
-        height: height * 1
       })));
-    } else {
-      setImages([
-        {
-          source: { uri: posts[postIndex].attachments },
-          title: `title-${postIndex}`,
-          width: width * 1,
-          height: height * 1
-        }
-      ]);
     }
     setSelectedImageIndex(imageIndex);
   };

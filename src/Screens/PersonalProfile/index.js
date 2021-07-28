@@ -117,6 +117,7 @@ const PersonalProfileScreen = (props) => {
     setAlert("");
 
     Http.profile(firstName, lastName, username, number, content, picture).then(response => {
+      console.log(response, '!@#!@#!@#!@#');
       props.updateUser({
         ...user,
         firstname: firstName,
@@ -133,6 +134,7 @@ const PersonalProfileScreen = (props) => {
       });
     }, e => {
       console.log('error', e);
+      console.log('error', e.body);
     });
   }
 
@@ -169,7 +171,7 @@ const PersonalProfileScreen = (props) => {
         alert(response.customButton);
       } else {
         const imageData = `data:${response.type};base64,${response.base64}`;
-        Http.uploadImage(username, imageData).then(rrr => {
+        Http.uploadImage(imageData).then(rrr => {
           updateUser({ ...user, avatar: imageData });
         }, e => console.log(e));
         convertImage(response.uri);
@@ -192,11 +194,13 @@ const PersonalProfileScreen = (props) => {
         alert(response.customButton);
       } else {
         const imageData = `data:${response.type};base64,${response.base64}`;
-        Http.uploadImage(username, imageData).then(rrr => {
-          updateUser({ ...user, avatar: imageData });
+        console.log(String(imageData).split(',')[1]);
+        Http.updateAvatar(String(imageData).split(',')[1]).then(response => {
+          const newAvatarURL = response.data;
+          updateUser({ ...user, avatar: newAvatarURL });
+          convertImage(newAvatarURL);
+          setPicture(newAvatarURL);
         }, e => console.log(e));
-        convertImage(response.uri);
-        setPicture(response.uri);
       }
     });
   };

@@ -271,11 +271,7 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
         </View>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23 }} >
           {
-            attachments.includes(',data') ? attachments.split(',data').map((item, index) => (
-              <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} key={index} />
-            )) : (
-              <Image style={styles.tinyLogo1} source={{ uri: attachments }} />
-            )
+            attachments.map((item, index) => <Image style={styles.tinyLogo} source={{ uri: item }} key={index} />)
           }
           {
             comments.map((comment, index) => (

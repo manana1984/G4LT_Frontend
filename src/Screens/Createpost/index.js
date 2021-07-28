@@ -17,6 +17,7 @@ const CreatepostScreen = (props, {navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [attachments, setAttachments] = useState([]);
+  const [files, setFiles] = useState([]);
   const [desText, setDesText] = useState('');
 
   const photoUploadDialogRef = useRef();
@@ -106,10 +107,13 @@ const CreatepostScreen = (props, {navigation}) => {
       } else if (response.customButton) {
         alert(response.customButton);
       } else {
-        // let cAttachments = attachments.map(d => d);
-        // cAttachments.push({ data: `data:${response.type};base64,${response.base64}`, uri: response.uri });
-        // setAttachments(cAttachments);
-        setAttachments(attachments.concat(`data:resp${response.type};base64,${response.base64}`));
+        const imageFile = {
+          uri: `data:${response.type};base64,${response.base64}`,
+          name: response.fileName,
+          type: response.type
+        };
+        setFiles(prevState => [...prevState, response]);
+        setAttachments(attachments.concat([imageFile]));
       }
     });
   };
@@ -118,8 +122,9 @@ const CreatepostScreen = (props, {navigation}) => {
     let options = {
       storageOptions: {
         skipBackup: true,
-        path: 'images',
+        path: 'images'
       },
+      // noData: true,
       includeBase64: true
     };
     ImagePicker.launchImageLibrary(options, (response) => {
@@ -128,9 +133,14 @@ const CreatepostScreen = (props, {navigation}) => {
       } else if (response.customButton) {
         alert(response.customButton);
       } else {
-        // let cAttachments = attachments.map(d => d);
-        // cAttachments.push({ data: `data:${response.type};base64,${response.base64}`, uri: response.uri });
-        setAttachments(attachments.concat(`data:resp${response.type};base64,${response.base64}`));
+        const imageFile = {
+          uri: `data:${response.type};base64,${response.base64}`,
+          name: response.fileName,
+          type: response.type
+        };
+        console.log(`data:${response.type};base64,${response.base64}`, '@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        setFiles(prevState => [...prevState, response]);
+        setAttachments(attachments.concat([imageFile]));
       }
     });
   };
@@ -138,7 +148,7 @@ const CreatepostScreen = (props, {navigation}) => {
   const renderFileUri = () => {
     return (
       <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-        {attachments.map((attachment, ai) => <Image key={ai} source={{ uri: attachment }} style={styles.image} />)}
+        {attachments.map((attachment, ai) => <Image key={ai} source={attachment} style={styles.image} />)}
         <TouchableOpacity onPress={onAddMediaPress} >
           <Image source={require('../../Assets/Images/plus.png')} style={styles.image} />
         </TouchableOpacity>
@@ -182,13 +192,12 @@ const CreatepostScreen = (props, {navigation}) => {
     const body = {
       description: desText,
       location: location,
-      attachments: attachments.join(',')
+      attachments: attachments.map(a => String(a.uri).split(',')[1])
     };
-
     FeedsAPI.circle_post(body).then(response => {
       setVisible(!visible);
       setModalVisible(true)
-      props.navigation.navigate('firstPage');   
+      props.navigation.navigate('firstPage');
     }, e => {
     });
   }
@@ -206,18 +215,18 @@ const CreatepostScreen = (props, {navigation}) => {
     }
     setDescription({ description: desText, created_at: (new Date()).toDateString(), images: attachments });
 
-    const body = {
-      description: desText,
+    var params = {
       location: location,
-      attachments: attachments.join(',')
+      description: desText,
+      is_public: true,
+      attachments: attachments.map(a => String(a.uri).split(',')[1])
     };
-
-    FeedsAPI.public_post(body).then(response => {
+    FeedsAPI.public_post(params).then(response => {
       setVisible(!visible);
       setModalVisible(true);
-      props.navigation.navigate('firstPage');   
-
+      props.navigation.navigate('firstPage');
     }, e => {
+      console.log('public post error: ----------------- ', e)
     });
   }
 
