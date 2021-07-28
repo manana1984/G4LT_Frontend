@@ -97,6 +97,7 @@ export default StyleSheet.create({
     },
     buttonOpen: {
         backgroundColor: "#F194FF",
+        // backgroundColor: "black",
     },
     buttonClose: {
         backgroundColor: "white",

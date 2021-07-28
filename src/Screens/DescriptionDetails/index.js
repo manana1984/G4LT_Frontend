@@ -210,10 +210,7 @@ const DescriptionDetailsScreen = (props, { created_at }) => {
 
     // console.log('comment Edit');
 
-    // console.log('efefefefe',comments, index, user);
-
-    // console.log(comments[index].username, user.username);
-
+   
     if(comments[index].username!==user.username) return;
 
     if (!isEdit[index]) {
@@ -240,6 +237,12 @@ const DescriptionDetailsScreen = (props, { created_at }) => {
   }
   
   const replyEdit = (commentIndex, replyIndex) => {
+
+
+    if(comments[commentIndex].replies[replyIndex].username!==user.username) return;
+
+
+
     if (!isReplyEdit || !isReplyEdit[commentIndex] || !isReplyEdit[commentIndex][replyIndex]) {
       setIsReplyEdit(isReplyEdit.map((c, ci) => ci !== commentIndex ? c : c.map((r, ri) => ri !== replyIndex ? false : true)));
       setEditReplyTxt(comments[commentIndex].replies[replyIndex].content);
@@ -267,12 +270,15 @@ const DescriptionDetailsScreen = (props, { created_at }) => {
           <Text style={styles.input}> {description}</Text>
         </View>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23 }} >
-          {
+          {/* {
             attachments.includes(',data') ? attachments.split(',data').map((item, index) => (
               <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} key={index} />
               )) : (
                 <Image style={styles.tinyLogo1} source={{ uri: attachments }} />
             )
+          } */}
+          {
+            attachments.map((item, index) => <Image style={styles.tinyLogo} source={{ uri: item }} key={index} />)
           }
           {
             comments.map((comment, index) => (

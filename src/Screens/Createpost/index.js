@@ -138,7 +138,6 @@ const CreatepostScreen = (props, {navigation}) => {
           name: response.fileName,
           type: response.type
         };
-        console.log(`data:${response.type};base64,${response.base64}`, '@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         setFiles(prevState => [...prevState, response]);
         setAttachments(attachments.concat([imageFile]));
       }
@@ -199,11 +198,11 @@ const CreatepostScreen = (props, {navigation}) => {
       setModalVisible(true)
       props.navigation.navigate('firstPage');
     }, e => {
+      console.log('Circle post error: ----------------- ', e)
     });
   }
 
   const postToPublic = () => {
-
     const username = user.username;
     if (!username) { }
     if (!desText) {
@@ -226,6 +225,7 @@ const CreatepostScreen = (props, {navigation}) => {
       setModalVisible(true);
       props.navigation.navigate('firstPage');
     }, e => {
+      
       console.log('public post error: ----------------- ', e)
     });
   }

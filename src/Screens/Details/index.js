@@ -84,7 +84,6 @@ const DetailsScreen = (props) => {
         ...att,
         attachments: String(att.attachments || '').split(',')
       }));
-      console.log(newPosts, '@@@@@@@@@@@@@@@@@@@@@@@@@@@');
       setPosts(newPosts);
       let temp = [];
       for(let i = 0; i< res.data.length; i++) {
