@@ -37,7 +37,7 @@ const Http = {
             method: "post",
             url: profileURL,
             data: data,
-            headers: { "Content-Type": "multipart/form-data" },
+            headers: { "Content-Type": "application/json" },
         })
     },
     resetPassword: (username, current_password, new_password) => {

@@ -7,7 +7,7 @@ const BaseAPIURL = 'https://api.g4lt.co/api/v1';
 
 const FeedAPI = {
     public_post: (data) => {
-        const url = `${BaseAPIURL}/posts`;
+        const url = `${BaseAPIURL}/fosts/create`;
         
         return axios({
             method: "post",
@@ -17,7 +17,7 @@ const FeedAPI = {
         })
     },
     circle_post: (data) => {
-        const url = `${BaseAPIURL}/posts`;
+        const url = `${BaseAPIURL}/circle`;
         return axios({
             method: "post",
             url: url,
@@ -26,21 +26,21 @@ const FeedAPI = {
         })
     },
     getMyPosts: () => {
-        const url = `${BaseAPIURL}/posts/me`;
+        const url = `${BaseAPIURL}/fosts/me`;
         return axios({
             method: "get",
             url: url
         })
     },
     getHomePosts: () => {
-        const url = `${BaseAPIURL}/posts/home`;
+        const url = `${BaseAPIURL}/fosts/home`;
         return axios({
             method: "get",
             url: url
         })
     },
     getDiscoverPosts: () => {
-        const url = `${BaseAPIURL}/posts/discover`;
+        const url = `${BaseAPIURL}/fosts/discover`;
         return axios({
             method: "get",
             url: url

@@ -220,6 +220,7 @@ const CreatepostScreen = (props, {navigation}) => {
       is_public: true,
       attachments: attachments.map(a => String(a.uri).split(',')[1])
     };
+    console.log(params)
     FeedsAPI.public_post(params).then(response => {
       setVisible(!visible);
       setModalVisible(true);
