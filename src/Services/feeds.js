@@ -17,7 +17,7 @@ const FeedAPI = {
         })
     },
     circle_post: (data) => {
-        const url = `${BaseAPIURL}/circle`;
+        const url = `${BaseAPIURL}/fosts/create`;
         return axios({
             method: "post",
             url: url,
@@ -133,7 +133,7 @@ const FeedAPI = {
         })
     },
     getPostDetail: (id) => {
-        const url = `${BaseAPIURL}/posts/detail/${id}`
+        const url = `${BaseAPIURL}/fosts/detail/${id}`
         return axios.get(url)
     },
     createComment: (params) => {
