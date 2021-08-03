@@ -150,10 +150,10 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('reservation.keystore')
-            storePassword 'shadow19920220'
-            keyAlias 'reservation'
-            keyPassword 'shadow19920220'
+            storeFile file('g4lt.keystore')
+            storePassword '123123'
+            keyAlias 'g4lt'
+            keyPassword '123123'
         }
     }
     buildTypes {
