@@ -183,6 +183,7 @@ const CreatepostScreen = (props, {navigation}) => {
       alert('Please input description!');
     }
     if (!location) {
+      alert('Please input description!');
     }
     if (!attachments.length) {
     }

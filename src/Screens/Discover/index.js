@@ -51,11 +51,16 @@ const ProfileComponent = ({
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23, marginBottom: 17 }} >
       {/* {!!attachments && attachments.includes(',data') ? attachments.split(',data').map((item, index) => (
         <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}>
-          <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} /></TouchableOpacity>
-      )) : (
-        <TouchableOpacity onPress={() => selectImage(postIndex, 0)}><Image style={styles.tinyLogo} source={{ uri: attachments }} /></TouchableOpacity>
-      )} */}
-      {attachments.map((attachment, index) => (
+        <Image style={styles.tinyLogo} source={{ uri: index === 0 ? item : `data${item}` }} /></TouchableOpacity>
+        )) : (
+          <TouchableOpacity onPress={() => selectImage(postIndex, 0)}><Image style={styles.tinyLogo} source={{ uri: attachments }} /></TouchableOpacity>
+        )} */}
+        {
+          attachments.length==1 && <TouchableOpacity onPress={() => selectImage(postIndex, 0)}>
+          <Image style={styles.bigLogo} source={{ uri: attachments[0] }} />
+        </TouchableOpacity> 
+        }
+      { attachments.length>1 && attachments.map((attachment, index) => (
         !!attachment ? <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}>
           <Image style={styles.tinyLogo} source={{ uri: attachment }} />
         </TouchableOpacity> : null
@@ -66,9 +71,11 @@ const ProfileComponent = ({
         <Ionicons name='thumbs-up-sharp' color={status ? '#800080' : 'blue'} size={17} />
       </TouchableOpacity>
       <Text style={styles.math}>{likes}</Text>
-      <TouchableOpacity style={styles.Avatar3} onPress={() => { setComments(_id) }} >
+      <TouchableOpacity style={styles.Avatar3} onPress={() => navigation.navigate('description', { description: description, attachments: attachments, post_id: id })}>
+        {/* <TouchableOpacity onPress={() => { setComments(_id) }} > */}
         <Ionicons name='chatbubble-outline' color='#800080' size={17} />
         <Text style={styles.math}>{comments}</Text>
+        {/* </TouchableOpacity> */}
       </TouchableOpacity>
     </TouchableOpacity>
   </View>
@@ -99,7 +106,7 @@ const DiscoverScreen = (props) => {
       }));
       setPosts(newPosts);
       let temp = [];
-      for(let i = 0; i< res.data.length; i++) {
+      for (let i = 0; i < res.data.length; i++) {
         temp.push(true);
       }
       setCommentStatus(temp);
@@ -136,12 +143,12 @@ const DiscoverScreen = (props) => {
   const selectImage = (postIndex, imageIndex) => {
     // if (posts[postIndex].attachments.includes(',data')) {
     //   setImages(posts[postIndex].attachments.split(',data').map((item, index) => index === 0 ? ({
-    //     source: { uri: item },
+    //     source: {uri: item },
     //     title: `title-${postIndex}-${index}`,
     //     width: width * 1,
     //     height: height * 1
     //   }) : ({
-    //     source: { uri: `data${item}` },
+    //     source: {uri: `data${item}` },
     //     title: `title-${postIndex}-${index}`,
     //     width: width * 1,
     //     height: height * 1
@@ -149,7 +156,7 @@ const DiscoverScreen = (props) => {
     // } else {
     //   setImages([
     //     {
-    //       source: { uri: posts[postIndex].attachments },
+    //       source: {uri: posts[postIndex].attachments },
     //       title: `title-${postIndex}`,
     //       width: width * 1,
     //       height: height * 1

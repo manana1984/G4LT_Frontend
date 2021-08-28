@@ -75,6 +75,16 @@ export default StyleSheet.create({
         borderColor: 'grey',
         marginTop: 10
     },
+    bigLogo: {
+        marginLeft: 7,
+        width: width / 6 * 5,
+        height: height*1,
+        // borderRadius:20,
+        borderWidth: .1,
+        borderColor: 'grey',
+        marginTop: 10
+    },
+
     backgroundcomponent: {
         flexDirection: 'column',
         flexWrap: 'wrap',

@@ -16,8 +16,8 @@ import { set } from 'react-native-reanimated';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const ProfileComponent = ({ 
-  avatar, currentusername, navigation, username, firstname, lastname, 
+const ProfileComponent = ({
+  avatar, currentusername, navigation, username, firstname, lastname,
   likes, comments, description, location, attachments, created_at, selectImage, postIndex,
   setLikes, setComments, _id, status, id,
 }) => {
@@ -49,20 +49,34 @@ const ProfileComponent = ({
       </View>
     </TouchableOpacity>
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23, marginBottom: 17 }} >
-      {attachments.map((attachment, index) => (
+      {
+        attachments.length == 1 && <TouchableOpacity onPress={() => selectImage(postIndex, 0)}>
+          <Image style={styles.bigLogo} source={{ uri: attachments[0] }} />
+        </TouchableOpacity>
+      }
+      {
+        attachments.length == 0 && attachments.map((attachment, index) => (
+          !!attachment ? <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}>
+            <Image style={styles.tinyLogo} source={{ uri: attachment }} />
+          </TouchableOpacity> : null
+        ))}
+      {attachments.length > 1 && attachments.map((attachment, index) => (
         !!attachment ? <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}>
           <Image style={styles.tinyLogo} source={{ uri: attachment }} />
         </TouchableOpacity> : null
       ))}
     </View>
     <TouchableOpacity style={styles.Avatar2} >
-      <TouchableOpacity onPress={() =>{setLikes(_id)}}>
-        <Ionicons name='thumbs-up-sharp' color={status? '#800080': 'blue'} size={17} />
+      <TouchableOpacity onPress={() => { setLikes(_id) }}>
+        <Ionicons name='thumbs-up-sharp' color={status ? '#800080' : 'blue'} size={17} />
       </TouchableOpacity>
-        <Text style={styles.math}>{likes}</Text>
-      <TouchableOpacity style={styles.Avatar3} onPress={() =>{setComments(_id)}} >
+      <Text style={styles.math}>{likes}</Text>
+      <TouchableOpacity style={styles.Avatar3} onPress={() => navigation.navigate('description1', { description: description, attachments: attachments, post_id: id })}>
+        {/* <TouchableOpacity style={styles.Avatar3} onPress={() => { setComments(_id) }} > */}
+
         <Ionicons name='chatbubble-outline' color='#800080' size={17} />
         <Text style={styles.math}>{comments}</Text>
+
       </TouchableOpacity>
     </TouchableOpacity>
   </View>
@@ -86,7 +100,7 @@ const DetailsScreen = (props) => {
       }));
       setPosts(newPosts);
       let temp = [];
-      for(let i = 0; i< res.data.length; i++) {
+      for (let i = 0; i < res.data.length; i++) {
         temp.push(true);
       }
       setCommentStatus(temp);
@@ -143,16 +157,16 @@ const DetailsScreen = (props) => {
     setCommentStatus(temp);
     FeedAPI.setLikes(posts[index].id).then(res => {
       const cmt = [...posts];
-      if(res.data.result ==='success') {
-        if(res.data.action === 'like') {
+      if (res.data.result === 'success') {
+        if (res.data.action === 'like') {
           cmt[index].likes++;
         }
-        else if(res.data.action === 'dislike') {
+        else if (res.data.action === 'dislike') {
           cmt[index].likes--;
         }
         setPosts(cmt);
       }
-    }).catch(e=> {
+    }).catch(e => {
       console.log('error', e);
     });
   }
@@ -160,7 +174,7 @@ const DetailsScreen = (props) => {
   const renderFileUri = () => {
     return (
       <SafeAreaView style={styles.backgroundcomponent}>
-        {posts.map((post, pi) => <ProfileComponent key={pi} 
+        {posts.map((post, pi) => <ProfileComponent key={pi}
           currentusername={user.username} username={post.username} likes={post.likes} comments={post.comments} location={post.location} attachments={post.attachments} description={post.description} postIndex={pi}
           avatar={post.avatar} lastname={post.lastname} firstname={post.firstname} navigation={navigation} name={`${user.firstname} ${user.lastname}`} created_at={post.created_at} selectImage={selectImage}
           setComments={setComments} setLikes={setLikes} _id={pi} status={commentStatus[pi]} id={post.id}
