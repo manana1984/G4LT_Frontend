@@ -50,16 +50,11 @@ const ProfileComponent = ({
     </TouchableOpacity>
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 23, marginBottom: 17 }} >
       {
-        attachments.length == 1 && <TouchableOpacity onPress={() => selectImage(postIndex, 0)}>
+        attachments.length == 1 && attachments[0]!=''  && <TouchableOpacity onPress={() => selectImage(postIndex, 0)}>
           <Image style={styles.bigLogo} source={{ uri: attachments[0] }} />
         </TouchableOpacity>
       }
-      {
-        attachments.length == 0 && attachments.map((attachment, index) => (
-          !!attachment ? <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}>
-            <Image style={styles.tinyLogo} source={{ uri: attachment }} />
-          </TouchableOpacity> : null
-        ))}
+      
       {attachments.length > 1 && attachments.map((attachment, index) => (
         !!attachment ? <TouchableOpacity key={`profile-attachment-${index}`} onPress={() => selectImage(postIndex, index)}>
           <Image style={styles.tinyLogo} source={{ uri: attachment }} />

@@ -13,7 +13,7 @@ const FollowersScreen = ({ navigation }) => {
       headerTitleStyle: { alignSelf: 'center' },
       headerTitle: "Followers",
       headerLeft: () => (
-      <TouchableOpacity onPress={() => navigation.navigate('G4LT') } style={{ marginLeft: 10 }}>
+      <TouchableOpacity onPress={() => navigation.navigate('profile') } style={{ marginLeft: 10 }}>
         <Ionicons name='chevron-left' size={24} color='Black'/>
       </TouchableOpacity>
       ),

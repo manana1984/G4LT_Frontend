@@ -184,8 +184,10 @@ const CreatepostScreen = (props, {navigation}) => {
     }
     if (!location) {
     }
-    if (!attachments.length) {
+    if (!attachments) {
       alert('Please input attachments!');
+    }
+    if (!attachments.length) {
     }
     setDescription({ description: desText, created_at: (new Date()).toDateString(), images: attachments });
 

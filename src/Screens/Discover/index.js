@@ -56,7 +56,7 @@ const ProfileComponent = ({
           <TouchableOpacity onPress={() => selectImage(postIndex, 0)}><Image style={styles.tinyLogo} source={{ uri: attachments }} /></TouchableOpacity>
         )} */}
         {
-          attachments.length==1 && <TouchableOpacity onPress={() => selectImage(postIndex, 0)}>
+          attachments.length==1 && attachments[0] != "" && <TouchableOpacity onPress={() => selectImage(postIndex, 0)}>
           <Image style={styles.bigLogo} source={{ uri: attachments[0] }} />
         </TouchableOpacity> 
         }

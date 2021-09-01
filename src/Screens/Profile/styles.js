@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+// const width = Dimensions.get('window').width;
+// const height = Dimensions.get('window').height;
 
 export default StyleSheet.create({
     container: {
@@ -10,6 +12,8 @@ export default StyleSheet.create({
     avatar: {
         alignItems: 'center',        
         justifyContent: 'center',
+        display: 'flex',
+        flexDirection: 'row',
         paddingLeft: 75,
         paddingRight: 75
     },
@@ -45,10 +49,11 @@ export default StyleSheet.create({
     math: {
         display: 'flex',
         flexDirection: 'row',
-        paddingLeft: 95
+        alignItems: 'center',        
+        justifyContent: 'center',
     },
     number1: {
-        paddingLeft: 80
+        paddingLeft: 70
     },
     number2: {
         paddingLeft: 85
