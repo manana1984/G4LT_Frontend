@@ -6,8 +6,10 @@ export default StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
         paddingTop: 10,
-        paddingLeft: 25
+        // paddingLeft: 25
     },
     avatar: {
         alignItems: 'center',        

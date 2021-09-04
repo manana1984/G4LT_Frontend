@@ -4,8 +4,27 @@ import { ListItem, Avatar } from 'react-native-elements';
 import { useLayoutEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
+import Feeds from '../../Services/feeds';
 
+const list = [
+]
 const FollowersScreen = ({ navigation }) => {
+  
+  const [followers, setFollowers] = useState(list);
+
+  useEffect(() => {
+    let temp = []
+    Feeds.getFollower().then(res => {
+
+      res.data.map(d=>{
+        temp.push(Feeds.getUserdata(d.following));
+        Promise.all(temp).then((values) => {
+            const t = values.map(v=>({name:v.data.firstname  + v.data.lastname, avatar_url: v.data.avatar,subtitle:v.data.about_me}))
+            setFollowings(t)
+        });
+      })
+    })
+  }, []);
 
   useLayoutEffect(() => {
    
@@ -18,7 +37,7 @@ const FollowersScreen = ({ navigation }) => {
       </TouchableOpacity>
       ),
       headerRight: () => (
-      <TouchableOpacity onPress={() => alert('cancel') } style={{ marginRight: 10 }} >
+      <TouchableOpacity  style={{ marginRight: 10 }} >
         <Ionicons name='search' size={24} color='Black'/>
       </TouchableOpacity>
       ),
@@ -28,35 +47,14 @@ const FollowersScreen = ({ navigation }) => {
       }
       
     });
-  }, []);
-
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-
-  const list = [
-    {
-      name: 'Amy Farha',
-      avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-      subtitle: 'Vice President'
-    },
-    {
-      name: 'Chris Jackson',
-      avatar_url: '../../Assets/Images/add.png',
-      subtitle: 'Vice Chairman'
-    },
-    {
-      name: 'Chris Jackson',
-      avatar_url: '../../Assets/Images/add.png',
-      subtitle: 'Vice Chairman'
-    }
-  ]
+  }, []);  
   return (
     <View>
 
       {
-        list.map((l, i) => (
+        followers.map((l, i) => (
           <ListItem key={i} bottomDivider >
-            <Avatar size="medium" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={1} rounded source={{ uri: 'https://faces/twitter/ladylexy/128.jpg', }} />
+            <Avatar size="medium" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={1} rounded source={{ uri: l.avatar_url, }} />
             <ListItem.Content>
               <ListItem.Title>{l.name}</ListItem.Title>
               <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>

@@ -85,6 +85,13 @@ const FeedAPI = {
             url: url,
         })
     },
+    getFollower: () => {
+        const url = `${BaseAPIURL}/follow/me/follower`
+        return axios({
+            method: "get",
+            url: url,
+        })
+    },
     getCircle: () => {
         const url = `${BaseAPIURL}/circle/me/circles`
         return axios({

@@ -86,10 +86,10 @@ export default StyleSheet.create({
         // margin: 10,
         marginLeft: 7,
         width: width/ 6 * 5,
-        height: height*1,
+        height: height/2,
         // borderRadius:20,
-        borderWidth: .1,
-        borderColor: 'grey',
+        // borderWidth: .1,
+        // borderColor: 'grey',
         marginTop: 10
     },
     backgroundcomponent: {
