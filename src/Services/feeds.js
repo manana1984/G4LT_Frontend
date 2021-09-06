@@ -86,7 +86,7 @@ const FeedAPI = {
         })
     },
     getFollower: () => {
-        const url = `${BaseAPIURL}/follow/me/follower`
+        const url = `${BaseAPIURL}/followme/follower`
         return axios({
             method: "get",
             url: url,

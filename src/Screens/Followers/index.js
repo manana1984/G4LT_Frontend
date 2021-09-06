@@ -17,10 +17,10 @@ const FollowersScreen = ({ navigation }) => {
     Feeds.getFollower().then(res => {
 
       res.data.map(d=>{
-        temp.push(Feeds.getUserdata(d.following));
+        temp.push(Feeds.getUserdata(d.follower));
         Promise.all(temp).then((values) => {
             const t = values.map(v=>({name:v.data.firstname  + v.data.lastname, avatar_url: v.data.avatar,subtitle:v.data.about_me}))
-            setFollowings(t)
+            setFollowers(t)
         });
       })
     })
