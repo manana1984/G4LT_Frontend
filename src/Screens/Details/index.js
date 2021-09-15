@@ -138,10 +138,10 @@ const ProfileComponent = ({
         <Text style={styles.math}>{comments}</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => { setLikes(_id) }}>
-        <Ionicons name='thumbs-up-sharp' color={status ? '#800080' : 'blue'} size={17} />
+      <TouchableOpacity style={styles.Avatar4} onPress={() => { setLikes(_id) }}>
+        <Ionicons name='arrow-redo-circle' color={status ? '#800080' : 'blue'} size={19} />
       </TouchableOpacity>
-      
+
     </TouchableOpacity>
   </View>
 };

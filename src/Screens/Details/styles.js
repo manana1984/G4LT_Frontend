@@ -42,6 +42,12 @@ export default StyleSheet.create({
         flexDirection: 'row',
         paddingLeft: 10
     },
+    Avatar4:{
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingLeft: 10
+    },
     time: {
         display: 'flex',
         alignItems: 'center',

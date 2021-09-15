@@ -9,57 +9,62 @@ import Feeds from '../../Services/feeds';
 const list = [
 ]
 const FollowersScreen = ({ navigation }) => {
-  
+
   const [followers, setFollowers] = useState(list);
 
   useEffect(() => {
     let temp = []
     Feeds.getFollower().then(res => {
 
-      res.data.map(d=>{
+      res.data.map(d => {
         temp.push(Feeds.getUserdata(d.follower));
         Promise.all(temp).then((values) => {
-            const t = values.map(v=>({name:v.data.firstname  + v.data.lastname, avatar_url: v.data.avatar,subtitle:v.data.about_me}))
-            setFollowers(t)
+          // alert(JSON.stringify(values));
+          const t = values.map(v => ({ username: v.data.username, name: v.data.firstname + v.data.lastname, avatar_url: v.data.avatar, subtitle: v.data.about_me }))
+          setFollowers(t)
         });
       })
     })
   }, []);
 
   useLayoutEffect(() => {
-   
+
     navigation.setOptions({
       headerTitleStyle: { alignSelf: 'center' },
       headerTitle: "Followers",
       headerLeft: () => (
-      <TouchableOpacity onPress={() => navigation.navigate('profile') } style={{ marginLeft: 10 }}>
-        <Ionicons name='chevron-left' size={24} color='Black'/>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('profile')} style={{ marginLeft: 10 }}>
+          <Ionicons name='chevron-left' size={24} color='Black' />
+        </TouchableOpacity>
       ),
       headerRight: () => (
-      <TouchableOpacity  style={{ marginRight: 10 }} >
-        <Ionicons name='search' size={24} color='Black'/>
-      </TouchableOpacity>
+        <TouchableOpacity style={{ marginRight: 10 }} >
+          <Ionicons name='search' size={24} color='Black' />
+        </TouchableOpacity>
       ),
       headerStyle: {
         backgroundColor: "white",
         borderBottomColor: "black",
       }
-      
+
     });
-  }, []);  
+  }, []);
   return (
     <View>
 
       {
         followers.map((l, i) => (
-          <ListItem key={i} bottomDivider >
-            <Avatar size="medium" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={1} rounded source={{ uri: l.avatar_url, }} />
-            <ListItem.Content>
-              <ListItem.Title>{l.name}</ListItem.Title>
-              <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
+          <TouchableOpacity onPress={() =>{ navigation.navigate('DiscoverView1', { username: l.username }) } } >
+          {/* <TouchableOpacity onPress={() => alert(JSON.stringify(l))  } > */}
+
+            <ListItem key={i} bottomDivider >
+              <Avatar size="medium" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={1} rounded source={{ uri: l.avatar_url, }} />
+              <ListItem.Content>
+                <ListItem.Title>{l.name}</ListItem.Title>
+                <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
+              </ListItem.Content>
+            </ListItem>
+          </TouchableOpacity>
         ))
       }
     </View>

@@ -81,7 +81,7 @@ const DescriptionDetails1Screen = (props, { created_at }) => {
       headerTitleStyle: { alignSelf: 'center' },
       headerTitle: "Post & Comments",
       headerLeft: () => (
-        <TouchableOpacity onPress={() => props.navigation.navigate('G4LT')} style={{ marginLeft: 10 }}>
+        <TouchableOpacity onPress={() => props.navigation.goBack()} style={{ marginLeft: 10 }}>
           <Ionicons name='chevron-left' size={24} color='Black' />
         </TouchableOpacity>
       ),

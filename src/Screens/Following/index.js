@@ -19,12 +19,12 @@ const FollowingScreen = ({ navigation }) => {
     Feeds.getFollowing().then(res => {
       // alert(JSON.stringify(res.data));
 
-      res.data.map(d=>{
+      res.data.map(d => {
         temp.push(Feeds.getUserdata(d.following));
         Promise.all(temp).then((values) => {
-            const t = values.map(v=>({name:v.data.firstname  + v.data.lastname, avatar_url: v.data.avatar,subtitle:v.data.about_me}))
-            setFollowings(t)
-            // console.log(values);
+          const t = values.map(v => ({ username: v.data.username, name: v.data.firstname + v.data.lastname, avatar_url: v.data.avatar, subtitle: v.data.about_me }))
+          setFollowings(t)
+          // console.log(values);
         });
         // Feeds.getUserdata(d.following).then(r=>{
         //   // alert(JSON.stringify(r.data))
@@ -38,25 +38,25 @@ const FollowingScreen = ({ navigation }) => {
   }, []);
 
   useLayoutEffect(() => {
-   
+
     navigation.setOptions({
       headerTitleStyle: { alignSelf: 'center' },
       headerTitle: "Following",
       headerLeft: () => (
-      <TouchableOpacity onPress={() => navigation.navigate('profile') } style={{ marginLeft: 10 }}>
-        <Ionicons name='chevron-left' size={24} color='Black'/>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('profile')} style={{ marginLeft: 10 }}>
+          <Ionicons name='chevron-left' size={24} color='Black' />
+        </TouchableOpacity>
       ),
       headerRight: () => (
-      <TouchableOpacity  style={{ marginRight: 10 }} >
-        <Ionicons name='search' size={24} color='Black'/>
-      </TouchableOpacity>
+        <TouchableOpacity style={{ marginRight: 10 }} >
+          <Ionicons name='search' size={24} color='Black' />
+        </TouchableOpacity>
       ),
       headerStyle: {
         backgroundColor: "white",
         borderBottomColor: "black",
       }
-      
+
     });
   }, []);
   return (
@@ -64,13 +64,16 @@ const FollowingScreen = ({ navigation }) => {
 
       {
         followings.map((l, i) => (
-          <ListItem key={i} bottomDivider >
-            <Avatar size="medium" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={1} rounded source={{ uri: l.avatar_url }} />
-            <ListItem.Content>
-              <ListItem.Title>{l.name}</ListItem.Title>
-              <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
+          <TouchableOpacity onPress={() => { navigation.navigate('DiscoverView1', { username: l.username }) }} >
+
+            <ListItem key={i} bottomDivider >
+              <Avatar size="medium" icon={{ name: 'user', type: 'font-awesome' }} activeOpacity={1} rounded source={{ uri: l.avatar_url }} />
+              <ListItem.Content>
+                <ListItem.Title>{l.name}</ListItem.Title>
+                <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
+              </ListItem.Content>
+            </ListItem>
+          </TouchableOpacity>
         ))
       }
     </View>
