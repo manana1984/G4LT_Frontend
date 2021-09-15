@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ListItem, Avatar } from 'react-native-elements';
 import { connectAuth, connectGeneralStatesToProps, connectAuthDescription } from '../../Redux/connects';
 import ImageView from 'react-native-image-view';
-
+// import SelectDropdown from 'react-native-select-dropdown'
 import styles from './styles';
 import { Dimensions } from 'react-native';
 import FeedAPI from '../../Services/feeds';
@@ -15,6 +15,73 @@ import { set } from 'react-native-reanimated';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
+// var React = require('react-native');
+// var {
+//   Component,
+//   AppRegistry,
+//   Text,
+//   View,
+// } = React;
+
+// const DropDown = require('react-native-dropdown');
+// const {
+//   Select,
+//   Option,
+//   OptionList,
+//   updatePosition
+// } = DropDown;
+
+// class App extends Component {
+//   constructor(props) {
+//     super(props);
+
+//     this.state = {
+//       canada: ''
+//     };
+//   }
+
+//   componentDidMount() {
+//     updatePosition(this.refs['SELECT1']);
+//     updatePosition(this.refs['OPTIONLIST']);
+//   }
+
+//   _getOptionList() {
+//     return this.refs['OPTIONLIST'];
+//   }
+
+  
+//   _canada(province) {
+
+// 	this.setState({
+//       ...this.state,
+//       canada: province
+//     });
+//   }
+
+//   render() {
+//     return (
+//       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//           <Select
+//             width={250}
+//             ref="SELECT1"
+//             optionListRef={this._getOptionList.bind(this)}
+//             defaultValue="Feed"
+//             onSelect={this._canada.bind(this)}>
+//             <Option>A</Option>
+//             <Option>B</Option>
+//             <Option>Q</Option>            
+//           </Select>
+
+//           <Text>Selected province of Canada: {this.state.canada}</Text>
+          
+//           <OptionList ref="OPTIONLIST"/>
+//       </View>
+//     );
+//   }
+// }
+
+// AppRegistry.registerComponent('App', () => App);
 
 const ProfileComponent = ({
   avatar, currentusername, navigation, username, firstname, lastname,
@@ -67,12 +134,14 @@ const ProfileComponent = ({
       </TouchableOpacity>
       <Text style={styles.math}>{likes}</Text>
       <TouchableOpacity style={styles.Avatar3} onPress={() => navigation.navigate('description1', { description: description, attachments: attachments, post_id: id })}>
-        {/* <TouchableOpacity style={styles.Avatar3} onPress={() => { setComments(_id) }} > */}
-
         <Ionicons name='chatbubble-outline' color='#800080' size={17} />
         <Text style={styles.math}>{comments}</Text>
-
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => { setLikes(_id) }}>
+        <Ionicons name='thumbs-up-sharp' color={status ? '#800080' : 'blue'} size={17} />
+      </TouchableOpacity>
+      
     </TouchableOpacity>
   </View>
 };
