@@ -30,8 +30,8 @@ export default StyleSheet.create({
     line1: {
         display: 'flex',
         flexDirection: 'row',
-        paddingLeft: 20,
-        paddingTop: 10
+        paddingLeft: 40,
+        paddingTop: 30
     },
     name2: {
         fontSize: 15,
@@ -82,7 +82,8 @@ export default StyleSheet.create({
     },
     number: {
         fontSize: 16,
-        color: "black"
+        color: "black",
+        paddingBottom: 20
     },
     name1: {
         fontSize: 17,

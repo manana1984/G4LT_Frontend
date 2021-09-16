@@ -135,7 +135,7 @@ const DiscoverView1Screen = (props) => {
       headerTitleStyle: { alignSelf: 'center' },
       headerTitle: "Discover",
       headerLeft: () => (
-        <TouchableOpacity onPress={() => props.navigation.navigate('Followers')} style={{ marginLeft: 10 }}>
+        <TouchableOpacity onPress={() => props.navigation.goBack()} style={{ marginLeft: 10 }}>
           <Ionicons name='chevron-left' size={24} color='Black' />
         </TouchableOpacity>
       ),
@@ -150,7 +150,7 @@ const DiscoverView1Screen = (props) => {
         backgroundColor: "white",
         borderBottomColor: "black",
       }
-
+ 
     });
   }, []);
   const [latitude, setLatitude] = useState(0);
@@ -330,7 +330,7 @@ const DiscoverView1Screen = (props) => {
             onClickFollowBtn(props.route.params.username)
           }}>{statusFollowing}</Text>
         </View>
-        <View>
+        <View style={{paddingLeft: 20, paddingTop: 20}}>
           <Text style={styles.name2}>About Me</Text>
           <Text style={styles.name3}>{userdata.about_me}</Text>
         </View>
@@ -340,7 +340,7 @@ const DiscoverView1Screen = (props) => {
           <Text style={styles.name1} >Posts</Text>
           <Text style={styles.number}>   {userdata.post_count}  </Text>
         </View>
-        <SafeAreaView >
+        <SafeAreaView style={{paddingLeft: 20}}>
           {renderFileUri()}
         </SafeAreaView>
       </SafeAreaView>
